@@ -5,7 +5,9 @@
         <item name="colorPrimary">@color/blue_light</item>
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/white</item>
+        <item name="popupTheme">@style/actionMenu</item>
         <item name="android:colorBackground">@color/white</item>
+
 
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/material_drawer_background</item>
@@ -27,9 +29,17 @@
         </item> <!-- Enables legacy Material 1 style -->
 
     </style>
+    <!--Circle Image View-->
     <style name="circle_image">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
+
+    <!--Menu-->
+    <style name="actionMenu" parent="Theme.AppCompat.Light">
+        <item name="background">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/black</item>
+    </style>
+
 
 </resources>
