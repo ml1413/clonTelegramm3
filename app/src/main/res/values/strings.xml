@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">clonTelegramm3</string>
+
+    <!--SettingsFragment-->
+    <string name="settings_user_name">Ivan Ivanov</string>
+    <string name="settings_status">В сети</string>
+    <string name="settings_text_account">Аккаунт</string>
+    <string name="default_number">+38 095 000 00 00</string>
+    <string name="phone_label">Нажмите чтобы изменить номар телефона</string>
+    <string name="login">Ivan Ivanov</string>
+    <string name="login_label">Имя пользователя</string>
+    <string name="about">О себе</string>
+    <string name="label_bio">Напишите немного о себе</string>
 </resources>
