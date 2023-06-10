@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/white</item>
         <item name="popupTheme">@style/actionMenu</item>
+        <item name="colorControlActivated">@color/primary</item>
         <item name="android:colorBackground">@color/white</item>
 
 

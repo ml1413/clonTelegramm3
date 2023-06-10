@@ -1,4 +1,4 @@
-package com.ooommm.ui.fragments
+package com.ooommm.clontelegramm3.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 
-open class BaseFragment(val layout: Int) : Fragment() {
+open class BaseFragment(private val layout: Int) : Fragment() {
     private lateinit var rootView: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

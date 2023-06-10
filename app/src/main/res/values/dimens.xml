@@ -3,6 +3,10 @@
     <!-- margin-->
     <dimen name="horizontal_margin">16dp</dimen>
     <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <!--Padding-->
+    <dimen name="appPadding">5dp</dimen>
+
     <!--SettingsFragment-->
 
     <!-- settings photo-->

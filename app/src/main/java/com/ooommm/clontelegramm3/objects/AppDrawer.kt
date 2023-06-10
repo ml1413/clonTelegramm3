@@ -1,4 +1,4 @@
-package com.ooommm.objects
+package com.ooommm.clontelegramm3.objects
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.ooommm.clontelegramm3.R
-import com.ooommm.ui.fragments.SettingsFragment
+import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
 
 class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
     private lateinit var drawer: Drawer

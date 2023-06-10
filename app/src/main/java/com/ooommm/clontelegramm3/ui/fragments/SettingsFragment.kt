@@ -1,4 +1,4 @@
-package com.ooommm.ui.fragments
+package com.ooommm.clontelegramm3.ui.fragments
 
 import android.view.Menu
 import android.view.MenuInflater

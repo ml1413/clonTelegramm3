@@ -13,4 +13,12 @@
     <string name="label_bio">Напишите немного о себе</string>
     <string name="settings_menu_change_name">Изменить имя</string>
     <string name="settings_menu_exit">Выход</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Fragment enter code-->
+    <string name="enter_text">Введите текст</string>
+    <string name="register_text_we_send">Мы отправили SMS c кодом проверки на Ваш телефон</string>
+    <string name="register_hint_default">- - - - - -</string>
+    <!--RegisterActivity-->
+    <string name="register_action_toolbar_tittle">Ваш телефон</string>
 </resources>

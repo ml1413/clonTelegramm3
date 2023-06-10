@@ -1,11 +1,13 @@
 package com.ooommm.clontelegramm3
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
-import com.ooommm.objects.AppDrawer
-import com.ooommm.ui.fragments.ChatsFragment
+import com.ooommm.clontelegramm3.objects.AppDrawer
+import com.ooommm.clontelegramm3.ui.fragments.ChatsFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -24,13 +26,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFun() {
-        // init toolbar 2
-        setSupportActionBar(toolbar)
-        //setFragment on Container 1
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, ChatsFragment()).commit()
-        // create header & drawer2
-        appDrawer.create()
+        if (false) {// init toolbar 2
+            setSupportActionBar(toolbar)
+            //setFragment on Container 1
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, ChatsFragment()).commit()
+            // create header & drawer2
+            appDrawer.create()
+        } else {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
