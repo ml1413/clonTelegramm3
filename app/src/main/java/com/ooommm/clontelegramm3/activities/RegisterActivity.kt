@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.ActivityRegisterBinding
-import com.ooommm.clontelegramm3.ui.fragments.EnterCodeFragment
 import com.ooommm.clontelegramm3.ui.fragments.EnterPhoneNumberFragment
+import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -25,8 +25,6 @@ class RegisterActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)//set toolbar
         title = getString(R.string.register_action_toolbar_tittle) // set tittle toolbar
         //set fragment in container
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.register_data_container, EnterPhoneNumberFragment())
-            .commit()
+        replaceFragment(EnterPhoneNumberFragment())
     }
 }

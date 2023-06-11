@@ -16,7 +16,7 @@
         style="@style/main_toolbar" />
 
     <FrameLayout
-        android:id="@+id/main_container"
+        android:id="@+id/data_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

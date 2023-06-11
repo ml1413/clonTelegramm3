@@ -13,6 +13,8 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
+import com.ooommm.clontelegramm3.utilits.replaceActivity
+import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
     private lateinit var drawer: Drawer
@@ -137,11 +139,7 @@ class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
                 ): Boolean {
                     when (drawerItem.identifier.toInt()) {
                         107 -> {
-                            activity.supportFragmentManager
-                                .beginTransaction()
-                                .addToBackStack(null)
-                                .replace(R.id.main_container, SettingsFragment())
-                                .commit()
+                            activity.replaceFragment(SettingsFragment())
                         }
                     }
                     return false

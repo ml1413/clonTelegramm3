@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.FragmentEnterPhoneNumberBinding
+import com.ooommm.clontelegramm3.utilits.replaceFragment
+import com.ooommm.clontelegramm3.utilits.showToast
 
 
 class EnterPhoneNumberFragment : Fragment() {
@@ -28,12 +29,9 @@ class EnterPhoneNumberFragment : Fragment() {
 
     private fun sendCode() {
         if (binding.etRegisterPhoneNumber.text.toString().isEmpty()) {
-            Toast.makeText(activity, "Введите номер телефона", Toast.LENGTH_SHORT).show()
+            showToast(getString(R.string.enter_phone_number))
         } else {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.register_data_container, EnterCodeFragment())
-                ?.addToBackStack(null)
-                ?.commit()
+            replaceFragment(fragment = EnterCodeFragment())
         }
     }
 }
