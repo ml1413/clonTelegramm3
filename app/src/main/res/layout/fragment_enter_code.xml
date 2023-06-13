@@ -42,7 +42,6 @@
         android:gravity="center"
         android:hint="@string/register_hint_default"
         android:maxLines="6"
-        android:textColorHint="@color/white_30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_text_we_send" />

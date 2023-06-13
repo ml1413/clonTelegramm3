@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "240103226550",
+    "project_id": "clontelegramm3",
+    "storage_bucket": "clontelegramm3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240103226550:android:7c5039ffcddb3cdc9f3a17",
+        "android_client_info": {
+          "package_name": "com.ooommm.clontelegramm3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240103226550-ft9m5vgfe0skj6vprhjsbm0k2stk3iq8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ooommm.clontelegramm3",
+            "certificate_hash": "8f8cb7d9260608e72dbc05b8e9704f981083c4cd"
+          }
+        },
+        {
+          "client_id": "240103226550-1qokklq7609mao54u7e66sgilnjfia8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLtugF0vPmiaeDAYI_cJVFffZ16Jm4z-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240103226550-1qokklq7609mao54u7e66sgilnjfia8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

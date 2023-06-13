@@ -24,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         toolbar = binding.registerToolbar//init toolbar
         setSupportActionBar(toolbar)//set toolbar
         title = getString(R.string.register_action_toolbar_tittle) // set tittle toolbar
-        //set fragment in container
-        replaceFragment(EnterPhoneNumberFragment())
+        replaceFragment(EnterPhoneNumberFragment(), false)  //set fragment in container
+
     }
 }

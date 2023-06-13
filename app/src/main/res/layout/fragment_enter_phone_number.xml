@@ -12,6 +12,7 @@
         android:id="@+id/et_register_phone_number"
         style="@style/edit_text"
         android:autofillHints=""
+        android:hint="+1 123 000 00 00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
