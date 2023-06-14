@@ -9,10 +9,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentEnterCodeBinding
-import com.ooommm.clontelegramm3.utilits.AUTH
-import com.ooommm.clontelegramm3.utilits.AppTextWatcher
-import com.ooommm.clontelegramm3.utilits.replaceActivity
-import com.ooommm.clontelegramm3.utilits.showToast
+import com.ooommm.clontelegramm3.utilits.*
 
 class EnterCodeFragment(val phoneNumber: String, val id: String) : Fragment() {
     private lateinit var binding: FragmentEnterCodeBinding
@@ -41,8 +38,24 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) : Fragment() {
         val credential = PhoneAuthProvider.getCredential(id, code)
         AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isComplete) {
-                showToast("Добро пожаловать")
-                (activity as RegisterActivity).replaceActivity(MainActivity())
+                val uid = AUTH.currentUser?.uid.toString() // user id
+
+                val dataMap = mutableMapOf<String, Any>()
+                // add value in map
+                dataMap.put(CHILD_ID, uid)
+                dataMap.put(CHILD_PHONE, phoneNumber)
+                dataMap.put(CHILD_USER_NAME, uid)
+
+                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
+                    .addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            showToast("Добро пожаловать")
+                            (activity as RegisterActivity).replaceActivity(MainActivity())
+                        } else {
+                            showToast(task2.exception?.message.toString())
+                        }
+                    }
+
             } else {
                 showToast(task.exception?.message.toString())
             }

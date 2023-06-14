@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.ActivityRegisterBinding
 import com.ooommm.clontelegramm3.ui.fragments.EnterPhoneNumberFragment
+import com.ooommm.clontelegramm3.utilits.initFirebase
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
             .also {
                 setContentView(it.root)
             }
+        initFirebase()
     }
 
     override fun onStart() {

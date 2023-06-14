@@ -3,6 +3,7 @@ package com.ooommm.clontelegramm3.objects
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -13,23 +14,57 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
-import com.ooommm.clontelegramm3.utilits.replaceActivity
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
-class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
+class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     private lateinit var drawer: Drawer
     private lateinit var header: AccountHeader
+    private lateinit var drawerLayout: DrawerLayout
 
     fun create() {
         //init  header1
         createHeader()
         //init drawer1
         createDrawer()
+        //init drawerLayout1
+        drawerLayout = drawer.drawerLayout
+    }
+
+    //отключить меню три полоски Toggle и ставим в место нее стрелку назад
+    fun disableDrawer() {
+        drawer.actionBarDrawerToggle
+            ?.isDrawerIndicatorEnabled = false // off toggle in drawer toolbar
+
+        mainActivity.supportActionBar
+            ?.setDisplayHomeAsUpEnabled(true)// on <- back button in toolbar
+
+        // hold drawer menu close
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        //возврат назад по стэку
+        toolbar.setNavigationOnClickListener {
+            mainActivity.supportFragmentManager.popBackStack()
+        }
+    }
+
+    //отключить стрелку назад и включить меню три полоски
+    fun enableDrawer() {
+        mainActivity.supportActionBar
+            ?.setDisplayHomeAsUpEnabled(false)// off <- back button in toolbar
+
+        drawer.actionBarDrawerToggle
+            ?.isDrawerIndicatorEnabled = true // on toggle in drawer toolbar
+
+        // drawer menu close (OFF)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        //open drawer
+        toolbar.setNavigationOnClickListener {
+            drawer.openDrawer()
+        }
     }
 
     private fun createDrawer() {
         drawer = DrawerBuilder()
-            .withActivity(activity)
+            .withActivity(mainActivity)
             .withToolbar(toolbar)
             .withActionBarDrawerToggle(true)
             .withSelectedItem(-1)
@@ -139,7 +174,7 @@ class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
                 ): Boolean {
                     when (drawerItem.identifier.toInt()) {
                         107 -> {
-                            activity.replaceFragment(SettingsFragment())
+                            mainActivity.replaceFragment(SettingsFragment())
                         }
                     }
                     return false
@@ -152,7 +187,7 @@ class AppDrawer(val activity: AppCompatActivity, val toolbar: Toolbar) {
 
     private fun createHeader() {
         header = AccountHeaderBuilder()
-            .withActivity(activity)
+            .withActivity(mainActivity)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
                 ProfileDrawerItem()
