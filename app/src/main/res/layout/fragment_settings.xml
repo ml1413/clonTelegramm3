@@ -37,24 +37,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/settings_text_layout_margin"
-            android:text="@string/settings_user_name"
             android:textColor="@color/white"
             android:textSize="@dimen/settings_normal_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_settings_photo"
-            app:layout_constraintTop_toTopOf="@id/iv_settings_photo" />
+            app:layout_constraintTop_toTopOf="@id/iv_settings_photo"
+            tools:text="@string/settings_user_name" />
 
         <TextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tv_settings_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/settings_text_layout_margin"
-            android:text="@string/settings_status"
             android:textColor="@color/white"
             android:textSize="@dimen/settings_small_text_status"
             app:layout_constraintBottom_toBottomOf="@id/iv_settings_photo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_settings_photo" />
+            app:layout_constraintStart_toEndOf="@id/iv_settings_photo"
+            tools:text="@string/settings_status" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -71,17 +71,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_button"
+        style="@style/settingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_settings_text_account"
-        style="@style/settingButton">
+        app:layout_constraintTop_toBottomOf="@id/tv_settings_text_account">
 
         <TextView
             android:id="@+id/tv_phone_number"
             style="@style/normalText"
-            android:text="@string/default_number"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/default_number" />
 
         <TextView
             android:id="@+id/tv_phone_label"
@@ -109,9 +109,9 @@
         <TextView
             android:id="@+id/tv_login"
             style="@style/normalText"
-            android:text="@string/login"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/login" />
 
         <TextView
             android:id="@+id/tv_settings_user_name_label"
@@ -139,9 +139,9 @@
         <TextView
             android:id="@+id/tv_bio"
             style="@style/normalText"
-            android:text="@string/about"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/about" />
 
         <TextView
             android:id="@+id/tv_label_bio"

@@ -9,7 +9,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.FragmentChangeNameBinding
 import com.ooommm.clontelegramm3.utilits.*
 
-class ChangeNameFragment : Fragment() {
+class ChangeNameFragment : BaseFragment(R.layout.fragment_change_name) {
 
     private lateinit var binding: FragmentChangeNameBinding
     override fun onCreateView(
