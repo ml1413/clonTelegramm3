@@ -1,16 +1,17 @@
 package com.ooommm.clontelegramm3
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
 import com.ooommm.clontelegramm3.objects.AppDrawer
 import com.ooommm.clontelegramm3.ui.fragments.ChatsFragment
-import com.ooommm.clontelegramm3.utilits.AUTH
-import com.ooommm.clontelegramm3.utilits.initFirebase
-import com.ooommm.clontelegramm3.utilits.replaceActivity
-import com.ooommm.clontelegramm3.utilits.replaceFragment
+import com.ooommm.clontelegramm3.utilits.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -50,6 +51,20 @@ class MainActivity : AppCompatActivity() {
         appDrawer = AppDrawer(mainActivity = this, toolbar = toolbar)
         //init firebase 1
         initFirebase()
+        //Заполнение модэли
+        initUser()
     }
+
+    private fun initUser() {
+        REF_DATABASE_ROOT
+            .child(NODE_USERS)
+            .child(UID)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                Log.d("TAG1", "initUser: $USER")
+                USER = it.getValue(User::class.java) ?: User()
+                Log.d("TAG1", "initUser: ${it.getValue(User::class.java)}")
+            })
+    }
+
 
 }

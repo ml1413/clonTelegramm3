@@ -22,4 +22,8 @@
     <!--RegisterActivity-->
     <string name="register_action_toolbar_tittle">Ваш телефон</string>
     <string name="enter_phone_number">Введите номер телефона</string>
+    <string name="strings_hint_input_name">Name</string>
+    <string name="settings_hint_input_surname">Last name</string>
+    <string name="settings_toast_name_is_empty">Имя не может быть пустым</string>
+    <string name="toast_data_update">\"Данные обновлены \"</string>
 </resources>

@@ -8,6 +8,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.utilits.AUTH
 import com.ooommm.clontelegramm3.utilits.replaceActivity
+import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onResume() {
@@ -24,6 +25,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             R.id.settings_menu_exit -> {
                 AUTH.signOut()// exit profile
                 (activity as MainActivity).replaceActivity(RegisterActivity())
+            }
+            R.id.settings_menu_change_name -> {
+                replaceFragment(ChangeNameFragment())
             }
         }
         return true
