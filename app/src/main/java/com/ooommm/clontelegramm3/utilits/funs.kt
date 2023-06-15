@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import com.ooommm.clontelegramm3.R
 
 //show toast
-fun Fragment.showToast(message: String) {
-    Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+fun showToast(message: String) {
+    Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
 }
 
 //replace Activity

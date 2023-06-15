@@ -1,15 +1,15 @@
 package com.ooommm.clontelegramm3.ui.fragments
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
-import com.ooommm.clontelegramm3.utilits.AUTH
-import com.ooommm.clontelegramm3.utilits.USER
-import com.ooommm.clontelegramm3.utilits.replaceActivity
-import com.ooommm.clontelegramm3.utilits.replaceFragment
+import com.ooommm.clontelegramm3.utilits.*
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private lateinit var binding: FragmentSettingsBinding
@@ -34,10 +34,29 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.tvPhoneNumber.text = USER.phone
         binding.tvSettingsStatus.text = USER.status
         binding.tvLogin.text = USER.username
+
         binding.settingsButtonChangeUserName
             .setOnClickListener { replaceFragment(ChangeUserNameFragment()) }
 
+        binding.settingsButtonAbout
+            .setOnClickListener { replaceFragment(ChangeBioFragment()) }
+
+        binding.ivSettingsChangePhoto.setOnClickListener {
+            changePhotoUser()
+        }
+
     }
+
+    private fun changePhotoUser() {
+        //Cropper Image
+        CropImage.activity()
+            .setAspectRatio(1, 1)//соотношение сторон
+            .setRequestedSize(600, 600)// обрежет фото если оно больше чем 600 х 600
+            .setCropShape(CropImageView.CropShape.OVAL) // форма фото круглая
+            .start(APP_ACTIVITY)
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.settings_action_menu, menu)
@@ -47,7 +66,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         when (item.itemId) {
             R.id.settings_menu_exit -> {
                 AUTH.signOut()// exit profile
-                (activity as MainActivity).replaceActivity(RegisterActivity())
+                (APP_ACTIVITY).replaceActivity(RegisterActivity())
             }
             R.id.settings_menu_change_name -> {
                 replaceFragment(ChangeNameFragment())
