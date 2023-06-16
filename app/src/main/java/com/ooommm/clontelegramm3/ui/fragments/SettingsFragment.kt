@@ -2,8 +2,10 @@ package com.ooommm.clontelegramm3.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import com.google.firebase.storage.StorageReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
@@ -45,6 +47,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             changePhotoUser()
         }
 
+        binding.ivSettingsPhoto.downloadAndSetImage(USER.photoUrl)
+
+
     }
 
     private fun changePhotoUser() {
@@ -53,9 +58,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             .setAspectRatio(1, 1)//соотношение сторон
             .setRequestedSize(600, 600)// обрежет фото если оно больше чем 600 х 600
             .setCropShape(CropImageView.CropShape.OVAL) // форма фото круглая
-            .start(APP_ACTIVITY)
+            .start(APP_ACTIVITY, this)
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -74,4 +78,30 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
         return true
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (
+            requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+            && resultCode == RESULT_OK
+            && data != null
+        ) {
+            val uri = CropImage.getActivityResult(data).uri
+            val path = REF_STORAGE_ROOT
+                .child(FOLDER_PROFILE_IMAGE)
+                .child(CURRENT_UID)
+            //функцыи высшего порядка
+            putImageToStorage(uri, path) {
+                getUrlFromStorage(path) {
+                    putUrlToDatabase(it) {
+                        binding.ivSettingsPhoto.downloadAndSetImage(it)
+                        showToast(getString(R.string.toast_data_update))
+                        USER.photoUrl = it
+                        APP_ACTIVITY.appDrawer.updateProfile()
+                    }
+                }
+            }
+        }
+    }
 }
+

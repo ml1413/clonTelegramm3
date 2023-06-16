@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
+import com.ooommm.clontelegramm3.utilits.hideKeyboard
 
 
 open class BaseChangeFragment(layout: Int) : Fragment(layout) {
@@ -14,11 +14,11 @@ open class BaseChangeFragment(layout: Int) : Fragment(layout) {
         super.onStart()
         setHasOptionsMenu(true)
         (activity as MainActivity).appDrawer.disableDrawer()
+        hideKeyboard()
     }
 
     override fun onStop() {
         super.onStop()
-        APP_ACTIVITY.hideKeyboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

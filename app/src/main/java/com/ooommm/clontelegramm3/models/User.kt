@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.utilits
+package com.ooommm.clontelegramm3.models
 
 data class User(
     val id: String = "",

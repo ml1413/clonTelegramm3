@@ -1,6 +1,9 @@
 package com.ooommm.clontelegramm3.objects
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,16 +15,23 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
+import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
+import com.ooommm.clontelegramm3.utilits.USER
+import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     private lateinit var drawer: Drawer
     private lateinit var header: AccountHeader
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var currentProfile: ProfileDrawerItem
 
     fun create() {
+        //init profile in header
+        initLoader()
         //init  header1
         createHeader()
         //init drawer1
@@ -186,13 +196,34 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     }
 
     private fun createHeader() {
+        currentProfile = ProfileDrawerItem()
+            .withName(USER.fullname.replace("|"," "))
+            .withEmail(USER.phone)
+            .withIcon(USER.photoUrl)
+            .withIdentifier(200)
+
         header = AccountHeaderBuilder()
             .withActivity(mainActivity)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
-                ProfileDrawerItem()
-                    .withName("Ivan Ivanov")
-                    .withEmail("+3 095 454 34 54")
+                currentProfile
             ).build()
+    }
+
+    fun updateProfile() {
+        currentProfile
+            .withName(USER.fullname.replace("|"," "))
+            .withEmail(USER.phone)
+            .withIcon(USER.photoUrl)
+
+        header.updateProfile(currentProfile)
+    }
+
+    private fun initLoader() {
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
+                imageView.downloadAndSetImage(uri.toString())
+            }
+        })
     }
 }

@@ -2,6 +2,7 @@ package com.ooommm.clontelegramm3.ui.fragments
 
 import androidx.fragment.app.Fragment
 import com.ooommm.clontelegramm3.MainActivity
+import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 
 
 open class BaseFragment(layout: Int) : Fragment(layout) {
@@ -9,12 +10,12 @@ open class BaseFragment(layout: Int) : Fragment(layout) {
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).appDrawer.disableDrawer()
+        APP_ACTIVITY.appDrawer.disableDrawer()
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).appDrawer.enableDrawer()
+        APP_ACTIVITY.appDrawer.enableDrawer()
     }
 
 }
