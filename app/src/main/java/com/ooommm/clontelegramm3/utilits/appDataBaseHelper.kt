@@ -20,9 +20,12 @@ lateinit var USER: User
 
 const val NODE_USERS = "users"
 const val NODE_USERNAME = "username"
+const val NODE_PHONES = "phones"
+const val NODE_PHONES_CONTACTS = "phones_contacts"
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
 
+//значения должны совподать со значениями полей модели
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
 const val CHILD_USER_NAME = "username"
@@ -102,6 +105,29 @@ fun initContacts() {
 
             }
         }
+        //добавлен номер который зарегестрирован в firebase
+        arrayContacts.add(CommonModel(fullname = "IVAN", phone = "+16505551111"))
+        arrayContacts.add(CommonModel(fullname = "EGOR", phone = "+16505551234"))
+        Log.d("TAG1", "initContacts: $arrayContacts ")
         cursor?.close()
+        updatePhonesToDatabase(arrayContacts)
     }
+}
+
+fun updatePhonesToDatabase(arrayContacts: MutableSet<CommonModel>) {
+    REF_DATABASE_ROOT.child(NODE_PHONES)
+        .addListenerForSingleValueEvent(AppValueEventListener {
+            it.children.forEach { snapshot ->
+                arrayContacts.forEach { contact ->
+                    if (snapshot.key == contact.phone) {
+                        REF_DATABASE_ROOT
+                            .child(NODE_PHONES_CONTACTS)
+                            .child(CURRENT_UID)
+                            .child(snapshot.value.toString()).child(CHILD_ID)
+                            .setValue(snapshot.value.toString())
+                            .addOnFailureListener { showToast(it.message.toString()) }
+                    }
+                }
+            }
+        })
 }
