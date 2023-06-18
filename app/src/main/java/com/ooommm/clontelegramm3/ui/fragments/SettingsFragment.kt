@@ -2,10 +2,8 @@ package com.ooommm.clontelegramm3.ui.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import com.google.firebase.storage.StorageReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
@@ -34,7 +32,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.tvBio.text = USER.bio
         binding.tvSettingFullName.text = USER.fullname.replace("|", " ")
         binding.tvPhoneNumber.text = USER.phone
-        binding.tvSettingsStatus.text = USER.status
+        binding.tvSettingsStatus.text = USER.state
         binding.tvLogin.text = USER.username
 
         binding.settingsButtonChangeUserName
