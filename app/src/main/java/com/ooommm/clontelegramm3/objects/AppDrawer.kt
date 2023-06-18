@@ -18,12 +18,14 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.ooommm.clontelegramm3.R
+import com.ooommm.clontelegramm3.ui.fragments.ContactsFragment
 import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
+import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 import com.ooommm.clontelegramm3.utilits.USER
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
-class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
+class AppDrawer {
     private lateinit var drawer: Drawer
     private lateinit var header: AccountHeader
     private lateinit var drawerLayout: DrawerLayout
@@ -45,20 +47,20 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
         drawer.actionBarDrawerToggle
             ?.isDrawerIndicatorEnabled = false // off toggle in drawer toolbar
 
-        mainActivity.supportActionBar
+        APP_ACTIVITY.supportActionBar
             ?.setDisplayHomeAsUpEnabled(true)// on <- back button in toolbar
 
         // hold drawer menu close
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         //возврат назад по стэку
-        toolbar.setNavigationOnClickListener {
-            mainActivity.supportFragmentManager.popBackStack()
+        APP_ACTIVITY.toolbar.setNavigationOnClickListener {
+            APP_ACTIVITY.supportFragmentManager.popBackStack()
         }
     }
 
     //отключить стрелку назад и включить меню три полоски
     fun enableDrawer() {
-        mainActivity.supportActionBar
+        APP_ACTIVITY.supportActionBar
             ?.setDisplayHomeAsUpEnabled(false)// off <- back button in toolbar
 
         drawer.actionBarDrawerToggle
@@ -67,15 +69,15 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
         // drawer menu close (OFF)
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         //open drawer
-        toolbar.setNavigationOnClickListener {
+        APP_ACTIVITY.toolbar.setNavigationOnClickListener {
             drawer.openDrawer()
         }
     }
 
     private fun createDrawer() {
         drawer = DrawerBuilder()
-            .withActivity(mainActivity)
-            .withToolbar(toolbar)
+            .withActivity(APP_ACTIVITY)
+            .withToolbar(APP_ACTIVITY.toolbar)
             .withActionBarDrawerToggle(true)
             .withSelectedItem(-1)
             .withAccountHeader(header)
@@ -182,11 +184,7 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    when (drawerItem.identifier.toInt()) {
-                        107 -> {
-                            mainActivity.replaceFragment(SettingsFragment())
-                        }
-                    }
+                    clickToItem(drawerItem)
                     return false
                 }
 
@@ -195,15 +193,22 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
 
     }
 
+    private fun clickToItem(drawerItem: IDrawerItem<*>) {
+        when (drawerItem.identifier.toInt()) {
+            107 -> APP_ACTIVITY.replaceFragment(SettingsFragment())
+            104 -> APP_ACTIVITY.replaceFragment(ContactsFragment())
+        }
+    }
+
     private fun createHeader() {
         currentProfile = ProfileDrawerItem()
-            .withName(USER.fullname.replace("|"," "))
+            .withName(USER.fullname.replace("|", " "))
             .withEmail(USER.phone)
             .withIcon(USER.photoUrl)
             .withIdentifier(200)
 
         header = AccountHeaderBuilder()
-            .withActivity(mainActivity)
+            .withActivity(APP_ACTIVITY)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
                 currentProfile
@@ -212,7 +217,7 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
 
     fun updateProfile() {
         currentProfile
-            .withName(USER.fullname.replace("|"," "))
+            .withName(USER.fullname.replace("|", " "))
             .withEmail(USER.phone)
             .withIcon(USER.photoUrl)
 
