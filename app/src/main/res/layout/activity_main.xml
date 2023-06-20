@@ -10,10 +10,16 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
+        style="@style/main_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/main_toolbar" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/toolbar_info"
+            layout="@layout/toolbar_info"
+            android:visibility="gone" />
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/data_container"

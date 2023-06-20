@@ -23,4 +23,7 @@
     <dimen name="settings_camera_W">45dp</dimen>
     <dimen name="settings_camera_H">45dp</dimen>
     <dimen name="settings_ripple_effect_radius">4dp</dimen>
+    <!--toolbar_info-->
+    <dimen name="toolbar_image_W">45dp</dimen>
+    <dimen name="toolbar_image_H">45dp</dimen>
 </resources>

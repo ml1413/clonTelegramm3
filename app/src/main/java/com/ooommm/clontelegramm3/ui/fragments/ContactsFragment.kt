@@ -62,15 +62,16 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
                 position: Int,
                 model: CommonModel
             ) {
-                refUsers = REF_DATABASE_ROOT
-                    .child(NODE_USERS)
-                    .child(model.id)
+                refUsers = REF_DATABASE_ROOT.child(NODE_USERS).child(model.id)
                 refUserListener = AppValueEventListener {
                     val contact = it.getCommonModel()
 
                     holder.name.text = contact.fullname.replace("|", " ")
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
+                    holder.itemView.setOnClickListener {
+                        replaceFragment(SingleChatFragment(contact = contact))
+                    }
                 }
 
                 refUsers.addValueEventListener(refUserListener)
