@@ -48,8 +48,13 @@ class SingleChatFragment(private val contact: CommonModel) :
         toolbarInfo.findViewById<ImageView>(R.id.toolbar_chat_image)
             .downloadAndSetImage(receivingUserModel.photoUrl)
 
-        toolbarInfo.findViewById<TextView>(R.id.tv_toolbar_chat_fullname).text =
-            receivingUserModel.fullname.replace("|"," ")
+        if (receivingUserModel.fullname.isEmpty()) {
+            toolbarInfo.findViewById<TextView>(R.id.tv_toolbar_chat_fullname).text =
+                contact.fullname.replace("|", " ")
+        } else {
+            toolbarInfo.findViewById<TextView>(R.id.tv_toolbar_chat_fullname).text =
+                receivingUserModel.fullname.replace("|", " ")
+        }
 
         toolbarInfo.findViewById<TextView>(R.id.tv_toolbar_chat_status).text =
             receivingUserModel.state

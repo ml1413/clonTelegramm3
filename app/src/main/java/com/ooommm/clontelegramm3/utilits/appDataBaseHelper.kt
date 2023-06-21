@@ -81,56 +81,32 @@ inline fun initUser(crossinline function: () -> Unit) {
 
 }
 
-@SuppressLint("Range")
-fun initContacts() {
-    if (checkPermission(READ_CONTACTS)) {
-        var arrayContacts = mutableSetOf<CommonModel>()
-        val cursor = APP_ACTIVITY.contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            null,
-            null,
-            null,
-            null
-        )
-        cursor?.let {
-            while (it.moveToNext()) {
-                val fullname =
-                    it.getString(it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                val phone =
-                    it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                        .replace(" ", "")
-
-                val newModel = CommonModel(fullname = fullname, phone = phone)
-
-                arrayContacts.add(newModel)
-
-            }
-        }
-        //добавлен номер который зарегестрирован в firebase
-        arrayContacts.add(CommonModel(fullname = "IVAN", phone = "+16505551111"))
-        arrayContacts.add(CommonModel(fullname = "EGOR", phone = "+16505551234"))
-        Log.d("TAG1", "initContacts: $arrayContacts ")
-        cursor?.close()
-        updatePhonesToDatabase(arrayContacts)
-    }
-}
 
 fun updatePhonesToDatabase(arrayContacts: MutableSet<CommonModel>) {
-    REF_DATABASE_ROOT.child(NODE_PHONES)
-        .addListenerForSingleValueEvent(AppValueEventListener {
-            it.children.forEach { snapshot ->
-                arrayContacts.forEach { contact ->
-                    if (snapshot.key == contact.phone) {
-                        REF_DATABASE_ROOT
-                            .child(NODE_PHONES_CONTACTS)
-                            .child(CURRENT_UID)
-                            .child(snapshot.value.toString()).child(CHILD_ID)
-                            .setValue(snapshot.value.toString())
-                            .addOnFailureListener { showToast(it.message.toString()) }
+    if (AUTH.currentUser != null) {
+        REF_DATABASE_ROOT.child(NODE_PHONES)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                it.children.forEach { snapshot ->
+                    arrayContacts.forEach { contact ->
+                        if (snapshot.key == contact.phone) {
+                            REF_DATABASE_ROOT
+                                .child(NODE_PHONES_CONTACTS)
+                                .child(CURRENT_UID)
+                                .child(snapshot.value.toString()).child(CHILD_ID)
+                                .setValue(snapshot.value.toString())
+                                .addOnFailureListener { showToast(it.message.toString()) }
+
+                            REF_DATABASE_ROOT
+                                .child(NODE_PHONES_CONTACTS)
+                                .child(CURRENT_UID)
+                                .child(snapshot.value.toString()).child(CHILD_FULLNAME)
+                                .setValue(contact.fullname)
+                                .addOnFailureListener { showToast(it.message.toString()) }
+                        }
                     }
                 }
-            }
-        })
+            })
+    }
 }
 
 //extension fun

@@ -1,8 +1,11 @@
 package com.ooommm.clontelegramm3.utilits
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.imageview.ShapeableImageView
 import com.ooommm.clontelegramm3.R
+import com.ooommm.clontelegramm3.models.CommonModel
 import com.squareup.picasso.Picasso
 
 //show toast
@@ -63,3 +67,37 @@ fun ImageView.downloadAndSetImage(url: String) {
         .placeholder(R.drawable.ic_baseline_person_24)
         .into(this)
 }
+@SuppressLint("Range")
+fun initContacts() {
+    if (checkPermission(READ_CONTACTS)) {
+        var arrayContacts = mutableSetOf<CommonModel>()
+        val cursor = APP_ACTIVITY.contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        cursor?.let {
+            while (it.moveToNext()) {
+                val fullname =
+                    it.getString(it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                val phone =
+                    it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                        .replace(" ", "")
+
+                val newModel = CommonModel(fullname = fullname, phone = phone)
+
+                arrayContacts.add(newModel)
+
+            }
+        }
+        //добавлен номер который зарегестрирован в firebase
+        arrayContacts.add(CommonModel(fullname = "IVAN", phone = "+16505551111"))
+        arrayContacts.add(CommonModel(fullname = "EGOR", phone = "+16505551234"))
+        cursor?.close()
+        updatePhonesToDatabase(arrayContacts)
+    }
+}
+
+
