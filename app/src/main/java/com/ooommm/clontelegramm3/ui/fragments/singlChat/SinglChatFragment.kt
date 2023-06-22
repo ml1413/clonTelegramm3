@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
+import com.ooommm.clontelegramm3.ui.fragments.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 
 
@@ -22,6 +24,11 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var receivingUserModel: UserModel
     private lateinit var toolbarInfo: View
     private lateinit var refUser: DatabaseReference
+    private lateinit var refMessage: DatabaseReference
+    private lateinit var adapter: SingleChatAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var messageListener: AppValueEventListener
+    private var listMessages = emptyList<CommonModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +40,26 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     override fun onResume() {
         super.onResume()
+        initToolbar()
+        initRecycleView()
+    }
+
+    private fun initRecycleView() {
+        recyclerView = binding.chatRecycleView
+        adapter = SingleChatAdapter()
+        refMessage = REF_DATABASE_ROOT.child(NODE_MESSAGES)
+            .child(CURRENT_UID)
+            .child(contact.id)
+        recyclerView.adapter = adapter
+        messageListener = AppValueEventListener { dataSnapshot ->
+            listMessages = dataSnapshot.children.map { it.getCommonModel() }
+            adapter.setList(listMessages)
+            recyclerView.smoothScrollToPosition(adapter.itemCount)
+        }
+        refMessage.addValueEventListener(messageListener)
+    }
+
+    private fun initToolbar() {
         toolbarInfo.visibility = View.VISIBLE
 
 
@@ -79,6 +106,8 @@ class SingleChatFragment(private val contact: CommonModel) :
         toolbarInfo.visibility = View.GONE
 
         refUser.removeEventListener(listenerInfoToolbar)
+
+        refMessage.removeEventListener(messageListener)
 
     }
 }

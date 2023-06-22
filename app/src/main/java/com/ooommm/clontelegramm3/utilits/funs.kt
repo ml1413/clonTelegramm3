@@ -15,6 +15,8 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.*
 
 //show toast
 fun showToast(message: String) {
@@ -67,6 +69,7 @@ fun ImageView.downloadAndSetImage(url: String) {
         .placeholder(R.drawable.ic_baseline_person_24)
         .into(this)
 }
+
 @SuppressLint("Range")
 fun initContacts() {
     if (checkPermission(READ_CONTACTS)) {
@@ -95,9 +98,16 @@ fun initContacts() {
         //добавлен номер который зарегестрирован в firebase
         arrayContacts.add(CommonModel(fullname = "IVAN", phone = "+16505551111"))
         arrayContacts.add(CommonModel(fullname = "EGOR", phone = "+16505551234"))
+        arrayContacts.add(CommonModel(fullname = "TurkMEn", phone = "+16505552222"))
         cursor?.close()
         updatePhonesToDatabase(arrayContacts)
     }
+}
+
+fun String.assTime(): String {
+    val time = Date(this.toLong())
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return timeFormat.format(time)
 }
 
 
