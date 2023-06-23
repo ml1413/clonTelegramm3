@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments
+package com.ooommm.clontelegramm3.ui.fragments.register
 
 import android.os.Bundle
 import android.util.Log
@@ -7,18 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentEnterPhoneNumberBinding
-import com.ooommm.clontelegramm3.utilits.AUTH
-import com.ooommm.clontelegramm3.utilits.replaceActivity
-import com.ooommm.clontelegramm3.utilits.replaceFragment
-import com.ooommm.clontelegramm3.utilits.showToast
+import com.ooommm.clontelegramm3.utilits.*
 import java.util.concurrent.TimeUnit
 
 
@@ -45,7 +39,7 @@ class EnterPhoneNumberFragment : Fragment() {
                 AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
                     if (task.isComplete) {
                         showToast("Добро пожаловать")
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                        restartActivity()
                     } else {
                         showToast(task.exception?.message.toString())
                         Log.d(
@@ -81,7 +75,7 @@ class EnterPhoneNumberFragment : Fragment() {
             phoneNumber,
             60,
             TimeUnit.SECONDS,
-            activity as RegisterActivity,
+            APP_ACTIVITY,
             callBack
         )
 //

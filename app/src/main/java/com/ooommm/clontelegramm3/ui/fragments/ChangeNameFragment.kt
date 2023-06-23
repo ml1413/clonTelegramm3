@@ -1,7 +1,6 @@
 package com.ooommm.clontelegramm3.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.FragmentChangeNameBinding
@@ -41,16 +40,9 @@ class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {
             showToast(getString(R.string.settings_toast_name_is_empty))
         } else {
             val fullName = "$name|$surname"
-            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_FULLNAME)
-                .setValue(fullName)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showToast(getString(R.string.toast_data_update))
-                        USER.fullname = fullName
-                        APP_ACTIVITY.appDrawer.updateProfile()
-                        activity?.supportFragmentManager?.popBackStack()
-                    }
-                }
+            setNameToDateBase(fullName = fullName)
+
         }
     }
+
 }

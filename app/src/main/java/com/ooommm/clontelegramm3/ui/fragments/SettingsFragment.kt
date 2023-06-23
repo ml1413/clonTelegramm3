@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -69,7 +68,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             R.id.settings_menu_exit -> {
                 AppStates.updateState(AppStates.OFFLINE)
                 AUTH.signOut()// exit profile
-                (APP_ACTIVITY).replaceActivity(RegisterActivity())
+                restartActivity()
             }
             R.id.settings_menu_change_name -> {
                 replaceFragment(ChangeNameFragment())

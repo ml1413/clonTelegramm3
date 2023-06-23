@@ -5,15 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.google.firebase.components.ComponentRuntime
-import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
 import com.ooommm.clontelegramm3.objects.AppDrawer
-import com.ooommm.clontelegramm3.ui.fragments.ChatsFragment
+import com.ooommm.clontelegramm3.ui.fragments.MainFraagment
+import com.ooommm.clontelegramm3.ui.fragments.register.EnterPhoneNumberFragment
 import com.ooommm.clontelegramm3.utilits.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -40,16 +38,15 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initFun() {
+        setSupportActionBar(toolbar)// init toolbar 2
+
         if (AUTH.currentUser != null) {//firebase check user Authentication
 
-            setSupportActionBar(toolbar)// init toolbar 2
-
-            replaceFragment(ChatsFragment(), false)//setFragment on Container 1
+            replaceFragment(MainFraagment(), false)//setFragment on Container 1
 
             appDrawer.create() // create header & drawer2
         } else {
-
-            replaceActivity(activity = RegisterActivity())//open RegisterActivity
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
     }
 

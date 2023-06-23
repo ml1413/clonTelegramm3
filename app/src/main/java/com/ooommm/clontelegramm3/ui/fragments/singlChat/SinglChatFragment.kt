@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
@@ -27,8 +30,8 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var refMessage: DatabaseReference
     private lateinit var adapter: SingleChatAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var messageListener: AppValueEventListener
-    private var listMessages = emptyList<CommonModel>()
+    private lateinit var messageListener: ChildEventListener
+    private var listMessages = mutableListOf<CommonModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,12 +54,11 @@ class SingleChatFragment(private val contact: CommonModel) :
             .child(CURRENT_UID)
             .child(contact.id)
         recyclerView.adapter = adapter
-        messageListener = AppValueEventListener { dataSnapshot ->
-            listMessages = dataSnapshot.children.map { it.getCommonModel() }
-            adapter.setList(listMessages)
+        messageListener = AppChildEventListener {
+            adapter.addItem(item = it.getCommonModel())
             recyclerView.smoothScrollToPosition(adapter.itemCount)
         }
-        refMessage.addValueEventListener(messageListener)
+        refMessage.addChildEventListener(messageListener)
     }
 
     private fun initToolbar() {

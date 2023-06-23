@@ -12,9 +12,6 @@ open class BaseFragment(layout: Int) : Fragment(layout) {
         APP_ACTIVITY.appDrawer.disableDrawer()
     }
 
-    override fun onStop() {
-        super.onStop()
-        APP_ACTIVITY.appDrawer.enableDrawer()
-    }
+
 
 }

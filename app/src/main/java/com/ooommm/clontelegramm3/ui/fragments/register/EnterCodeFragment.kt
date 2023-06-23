@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments
+package com.ooommm.clontelegramm3.ui.fragments.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider
 import com.ooommm.clontelegramm3.MainActivity
-import com.ooommm.clontelegramm3.activities.RegisterActivity
 import com.ooommm.clontelegramm3.databinding.FragmentEnterCodeBinding
 import com.ooommm.clontelegramm3.utilits.*
 
@@ -24,7 +23,7 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as RegisterActivity).title = phoneNumber
+        APP_ACTIVITY.title = phoneNumber
         binding.etRegisterInputCode.addTextChangedListener(AppTextWatcher {
             val string = binding.etRegisterInputCode.text.toString()
             if (string.length == 6) {
@@ -52,7 +51,7 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) : Fragment() {
                         REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
                             .addOnSuccessListener {
                                 showToast("Добро пожаловать")
-                                (activity as RegisterActivity).replaceActivity(MainActivity())
+                                restartActivity()
                             }.addOnFailureListener { showToast(it.message.toString()) }
                     }
             } else {

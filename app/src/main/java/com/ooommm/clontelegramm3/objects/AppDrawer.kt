@@ -193,8 +193,8 @@ class AppDrawer {
 
     private fun clickToItem(drawerItem: IDrawerItem<*>) {
         when (drawerItem.identifier.toInt()) {
-            107 -> APP_ACTIVITY.replaceFragment(SettingsFragment())
-            104 -> APP_ACTIVITY.replaceFragment(ContactsFragment())
+            107 -> replaceFragment(SettingsFragment())
+            104 -> replaceFragment(ContactsFragment())
         }
     }
 

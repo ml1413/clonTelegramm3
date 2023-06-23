@@ -7,15 +7,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.utilits.CURRENT_UID
+import com.ooommm.clontelegramm3.utilits.DiffUtilCallBack
 import com.ooommm.clontelegramm3.utilits.assTime
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
     private var listMessageCache = emptyList<CommonModel>()
+    private lateinit var diffResult: DiffUtil.DiffResult
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     class SingleChatHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -56,9 +60,19 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
 
 
     fun setList(list: List<CommonModel>) {
-        listMessageCache = list
-        notifyDataSetChanged()
+
+    }
+
+    fun addItem(item: CommonModel) {
+        val newList = mutableListOf<CommonModel>()
+        newList.addAll(listMessageCache)
+        newList.add(item)
+        diffResult = DiffUtil.calculateDiff(DiffUtilCallBack(listMessageCache, newList))
+        diffResult.dispatchUpdatesTo(this)
+        listMessageCache = newList
     }
 }
+
+
 
 

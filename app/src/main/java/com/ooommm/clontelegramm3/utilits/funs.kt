@@ -10,8 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.imageview.ShapeableImageView
+import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.squareup.picasso.Picasso
@@ -24,21 +26,23 @@ fun showToast(message: String) {
 }
 
 //replace Activity
-fun AppCompatActivity.replaceActivity(activity: Activity) {
-    startActivity(Intent(this, activity::class.java))
-    this.finish()
+fun restartActivity() {
+
+    val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
+    APP_ACTIVITY.startActivity(intent)
+    APP_ACTIVITY.finish()
 }
 
 //replace Fragment in activity
-fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = true) {
+fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {
     if (addStack) {
-        supportFragmentManager
+        APP_ACTIVITY.supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
             .replace(R.id.data_container, fragment)
             .commit()
     } else {
-        supportFragmentManager
+        APP_ACTIVITY.supportFragmentManager
             .beginTransaction()
             .replace(R.id.data_container, fragment)
             .commit()
@@ -46,14 +50,6 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = tr
 
 }
 
-//replace Fragment in fragment
-fun Fragment.replaceFragment(fragment: Fragment) {
-    activity?.supportFragmentManager
-        ?.beginTransaction()
-        ?.addToBackStack(null)
-        ?.replace(R.id.data_container, fragment)
-        ?.commit()
-}
 
 //hide keyboard
 fun hideKeyboard() {
