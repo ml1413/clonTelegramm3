@@ -1,6 +1,5 @@
 package com.ooommm.clontelegramm3.ui.fragments.singlChat
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +7,15 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.utilits.CURRENT_UID
-import com.ooommm.clontelegramm3.utilits.DiffUtilCallBack
 import com.ooommm.clontelegramm3.utilits.assTime
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
-    private var listMessageCache = emptyList<CommonModel>()
+    private var listMessageCache = mutableListOf<CommonModel>()
     private lateinit var diffResult: DiffUtil.DiffResult
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,14 +56,14 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     override fun getItemCount() = listMessageCache.size
 
 
-    fun addItem(item: CommonModel) {
-        val newList = mutableListOf<CommonModel>()
-        newList.addAll(listMessageCache)
-        if (! newList.contains(item)) newList.add(item)
-        newList.sortBy { it.timeStamp.toString() }
-        diffResult = DiffUtil.calculateDiff(DiffUtilCallBack(listMessageCache, newList))
-        diffResult.dispatchUpdatesTo(this)
-        listMessageCache = newList
+    fun addItem(item: CommonModel, scroll: Boolean, onSuccess: () -> Unit) {
+        if (!listMessageCache.contains(item)) {
+            listMessageCache.add(item)
+            listMessageCache.sortBy { it.timeStamp.toString() }
+            val position = if (scroll) listMessageCache.size else 0
+            notifyItemInserted(position)
+        }
+        onSuccess()
     }
 }
 
