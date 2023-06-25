@@ -15,15 +15,13 @@
         app:layout_constraintBottom_toTopOf="@+id/chat_input_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_recycle_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/gradient"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/mesage_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -46,9 +44,21 @@
         android:layout_height="0dp"
         android:padding="@dimen/appPadding"
         android:src="@drawable/ic_baseline_send_24"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/chat_input_message"
-        app:tint="@color/black" />
+        app:tint="@color/colorPrimary" />
+
+    <ImageView
+        android:id="@+id/chat_btn_attach"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:padding="@dimen/appPadding"
+        android:src="@drawable/ic_baseline_attach_file_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chat_input_message"
+        app:tint="@color/black_50" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         //Cropper Image
         CropImage.activity()
             .setAspectRatio(1, 1)//соотношение сторон
-            .setRequestedSize(600, 600)// обрежет фото если оно больше чем 600 х 600
+            .setRequestedSize(250, 250)// обрежет фото если оно больше чем 600 х 600
             .setCropShape(CropImageView.CropShape.OVAL) // форма фото круглая
             .start(APP_ACTIVITY, this)
     }

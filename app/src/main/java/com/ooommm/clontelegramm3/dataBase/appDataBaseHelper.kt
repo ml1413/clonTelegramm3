@@ -27,6 +27,7 @@ const val NODE_PHONES_CONTACTS = "phones_contacts"
 const val NODE_MESSAGES = "messages"
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
+const val FOLDER_MESSAGE_IMAGE = "message_image"
 
 //значения должны совподать со значениями полей модели
 const val CHILD_ID = "id"
@@ -40,6 +41,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
+const val CHILD_IMAGE_URL = "imageUsr"
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -125,6 +127,7 @@ fun sendMessage(message: String, receivingUserID: String, typeText: String, func
     mapMessage.put(CHILD_FROM, CURRENT_UID)
     mapMessage.put(CHILD_TYPE, typeText)
     mapMessage.put(CHILD_TEXT, message)
+    mapMessage.put(CHILD_ID, messageKey.toString())
     mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
 
     val mapDialog = hashMapOf<String, Any>()
@@ -194,6 +197,28 @@ fun setNameToDateBase(fullName: String) {
         }.addOnFailureListener {
             showToast(it.message.toString())
         }
+}
+
+fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: String) {
+
+    val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage.put(CHILD_FROM, CURRENT_UID)
+    mapMessage.put(CHILD_TYPE, TYPE_MESSAGE_IMAGE)
+    mapMessage.put(CHILD_ID, messageKey)
+    mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
+    mapMessage.put(CHILD_IMAGE_URL, imageUrl)
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog.put("$refDialogUser/$messageKey", mapMessage)
+    mapDialog.put("$refDialogReceivingUser/$messageKey", mapMessage)
+
+    REF_DATABASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnFailureListener { showToast(it.message.toString()) }
+
 }
 
 
