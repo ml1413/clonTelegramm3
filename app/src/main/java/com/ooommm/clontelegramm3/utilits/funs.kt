@@ -1,18 +1,13 @@
 package com.ooommm.clontelegramm3.utilits
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.imageview.ShapeableImageView
 import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
@@ -100,7 +95,7 @@ fun initContacts() {
     }
 }
 
-fun String.assTime(): String {
+fun String.asTime(): String {
     val time = Date(this.toLong())
     val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     return timeFormat.format(time)

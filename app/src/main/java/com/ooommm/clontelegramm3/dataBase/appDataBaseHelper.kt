@@ -1,6 +1,7 @@
 package com.ooommm.clontelegramm3.utilits
 
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
@@ -41,7 +42,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
-const val CHILD_IMAGE_URL = "imageUsr"
+const val CHILD_IMAGE_URL = "imageUrl"
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -200,7 +201,7 @@ fun setNameToDateBase(fullName: String) {
 }
 
 fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: String) {
-
+    Log.d("TAG1", "sendMessageAsImage: $imageUrl")
     val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
     val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
 

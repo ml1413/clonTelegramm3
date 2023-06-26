@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,10 +60,11 @@ class SingleChatFragment(private val contact: CommonModel) :
     private fun initFields() {
         swipeRefreshLayout = binding.chatSwipeRefresh
         layoutManager = LinearLayoutManager(this.context)
+        //показать скрыть скрепку отправка файла
         binding.chatInputMessage.addTextChangedListener(AppTextWatcher {
             val string = binding.chatInputMessage.text.toString()
             if (string.isEmpty()) {
-                binding.chatBtnSendMessage.isVisible = false
+                binding.chatBtnSendMessage.isInvisible = true
                 binding.chatBtnAttach.isVisible = true
             } else {
                 binding.chatBtnSendMessage.isVisible = true
@@ -79,7 +81,6 @@ class SingleChatFragment(private val contact: CommonModel) :
         CropImage.activity()
             .setAspectRatio(1, 1)//соотношение сторон
             .setRequestedSize(250, 250)// обрежет фото если оно больше чем 600 х 600
-
             .start(APP_ACTIVITY, this)
     }
 
@@ -206,12 +207,12 @@ class SingleChatFragment(private val contact: CommonModel) :
             //функцыи высшего порядка
             putImageToStorage(uri, path) {
                 getUrlFromStorage(path) {
-                    sendMessageAsImage(contact.id,it,messageKey)
+                    sendMessageAsImage(contact.id, it, messageKey)
+                    isSmoothScrollToPosition = true
                 }
             }
         }
     }
-
 
 
     override fun onPause() {
