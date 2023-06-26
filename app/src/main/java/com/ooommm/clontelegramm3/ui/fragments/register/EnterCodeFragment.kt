@@ -43,17 +43,29 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) : Fragment() {
                 // add value in map
                 dataMap.put(CHILD_ID, uid)
                 dataMap.put(CHILD_PHONE, phoneNumber)
-                dataMap.put(CHILD_USER_NAME, uid)
 
-                REF_DATABASE_ROOT.child(NODE_PHONES).child(phoneNumber).setValue(uid)
-                    .addOnFailureListener { showToast(it.message.toString()) }
-                    .addOnSuccessListener {
-                        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
+                REF_DATABASE_ROOT
+                    .child(NODE_USERS)
+                    .child(uid)
+                    .addListenerForSingleValueEvent(AppValueEventListener {
+
+                        if (!it.hasChild(CHILD_USER_NAME)) {
+                            dataMap.put(CHILD_USER_NAME, uid)
+                        }
+
+                        REF_DATABASE_ROOT.child(NODE_PHONES).child(phoneNumber).setValue(uid)
+                            .addOnFailureListener { showToast(it.message.toString()) }
                             .addOnSuccessListener {
-                                showToast("Добро пожаловать")
-                                restartActivity()
-                            }.addOnFailureListener { showToast(it.message.toString()) }
-                    }
+                                REF_DATABASE_ROOT.child(NODE_USERS).child(uid)
+                                    .updateChildren(dataMap)
+                                    .addOnSuccessListener {
+                                        showToast("Добро пожаловать")
+                                        restartActivity()
+                                    }.addOnFailureListener { showToast(it.message.toString()) }
+                            }
+                    })
+
+
             } else {
                 showToast(task.exception?.message.toString())
             }
