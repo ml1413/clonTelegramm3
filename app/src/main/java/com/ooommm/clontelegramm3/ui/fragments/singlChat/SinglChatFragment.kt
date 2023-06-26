@@ -1,14 +1,17 @@
 package com.ooommm.clontelegramm3.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +25,9 @@ import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.ui.fragments.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SingleChatFragment(private val contact: CommonModel) :
@@ -57,23 +63,45 @@ class SingleChatFragment(private val contact: CommonModel) :
         initRecycleView()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
         swipeRefreshLayout = binding.chatSwipeRefresh
         layoutManager = LinearLayoutManager(this.context)
         //показать скрыть скрепку отправка файла
         binding.chatInputMessage.addTextChangedListener(AppTextWatcher {
             val string = binding.chatInputMessage.text.toString()
-            if (string.isEmpty()) {
-                binding.chatBtnSendMessage.isInvisible = true
+            if (string.isEmpty() || string == "запись") {
+                binding.chatBtnSendMessage.isVisible = false
+                binding.chatBtnVoice.isVisible = true
                 binding.chatBtnAttach.isVisible = true
             } else {
                 binding.chatBtnSendMessage.isVisible = true
                 binding.chatBtnAttach.isVisible = false
+                binding.chatBtnVoice.isVisible = false
             }
         })
 
-        binding.chatBtnAttach.setOnClickListener {
-            attachFile()
+        binding.chatBtnAttach.setOnClickListener { attachFile() }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            binding.chatBtnVoice.setOnTouchListener { v, event ->
+
+                if (checkPermission(RECORD_AUDIO)) {
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        //TODO record
+                        binding.chatInputMessage.setText("запись")
+
+                        binding.chatBtnVoice.setColorFilter(
+                            ContextCompat.getColor(APP_ACTIVITY, R.color.red)
+                        )
+                    } else if (event.action == MotionEvent.ACTION_UP) {
+                        //TODO stop record
+                        binding.chatInputMessage.setText("")
+                        binding.chatBtnVoice.colorFilter = null
+                    }
+                }
+                true
+            }
         }
     }
 
