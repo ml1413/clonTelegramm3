@@ -13,6 +13,8 @@ data class CommonModel(
     var type: String = "",
     var from: String = "",
     var timeStamp: Any = "",
-    var imageUrl: String = "EMPTY"
-)
+    var fileUrl: String = "empty",
+
+
+    )
 

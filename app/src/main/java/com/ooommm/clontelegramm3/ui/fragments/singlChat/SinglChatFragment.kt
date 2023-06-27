@@ -3,6 +3,7 @@ package com.ooommm.clontelegramm3.ui.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,7 +13,6 @@ import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +44,7 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var messageListener: AppChildEventListener
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var appVoiceRecorder: AppVoiceRecorder
     private var countMessages = 10
     private var isScrolling = false
     private var isSmoothScrollToPosition = true
@@ -65,6 +66,7 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        appVoiceRecorder = AppVoiceRecorder()
         swipeRefreshLayout = binding.chatSwipeRefresh
         layoutManager = LinearLayoutManager(this.context)
         //показать скрыть скрепку отправка файла
@@ -89,21 +91,31 @@ class SingleChatFragment(private val contact: CommonModel) :
                 if (checkPermission(RECORD_AUDIO)) {
                     if (event.action == MotionEvent.ACTION_DOWN) {
                         //TODO record
-                        binding.chatInputMessage.setText("запись")
+                        binding.chatInputMessage.setText("запись")//текст в поле ввода
+                        //установка цвета иконуи во время записи
+                        binding.chatBtnVoice
+                            .setColorFilter(ContextCompat.getColor(APP_ACTIVITY, R.color.red))
 
-                        binding.chatBtnVoice.setColorFilter(
-                            ContextCompat.getColor(APP_ACTIVITY, R.color.red)
-                        )
+                        val messageKey = getMessageKey(contact.id)
+                        appVoiceRecorder.startRecord(messageKey)
+
                     } else if (event.action == MotionEvent.ACTION_UP) {
                         //TODO stop record
-                        binding.chatInputMessage.setText("")
+                        binding.chatInputMessage.setText("") //текст в поле ввода
+                        //установка цвета во время окончания записи
                         binding.chatBtnVoice.colorFilter = null
+
+                        appVoiceRecorder.stopRecord() { file, messageKey ->
+                            uploadFileToStorage(Uri.fromFile(file), messageKey)
+                        }
+
                     }
                 }
                 true
             }
         }
     }
+
 
     private fun attachFile() {
         CropImage.activity()
@@ -224,10 +236,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         ) {
             val uri = CropImage.getActivityResult(data).uri
 
-            val messageKey = REF_DATABASE_ROOT
-                .child(NODE_MESSAGES)
-                .child(CURRENT_UID)
-                .child(contact.id).push().key.toString()
+            val messageKey = getMessageKey(contact.id)
 
             val path = REF_STORAGE_ROOT
                 .child(FOLDER_MESSAGE_IMAGE)
@@ -254,4 +263,9 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // удаляем рекордэр
+        appVoiceRecorder.releaseRecord()
+    }
 }

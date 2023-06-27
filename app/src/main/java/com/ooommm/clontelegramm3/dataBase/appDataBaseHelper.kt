@@ -42,7 +42,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
-const val CHILD_IMAGE_URL = "imageUrl"
+const val CHILD_FILE_URL = "fileUrl"
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -210,7 +210,7 @@ fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: St
     mapMessage.put(CHILD_TYPE, TYPE_MESSAGE_IMAGE)
     mapMessage.put(CHILD_ID, messageKey)
     mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
-    mapMessage.put(CHILD_IMAGE_URL, imageUrl)
+    mapMessage.put(CHILD_FILE_URL, imageUrl)
 
     val mapDialog = hashMapOf<String, Any>()
     mapDialog.put("$refDialogUser/$messageKey", mapMessage)
@@ -222,6 +222,14 @@ fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: St
 
 }
 
+fun getMessageKey(contactId: String) = REF_DATABASE_ROOT
+    .child(NODE_MESSAGES)
+    .child(CURRENT_UID)
+    .child(contactId).push().key.toString()
+
+fun uploadFileToStorage(uri: Uri, messageKey: String) {
+    showToast("record")
+}
 
 //extension fun
 fun DataSnapshot.getCommonModel(): CommonModel {

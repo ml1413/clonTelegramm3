@@ -1,6 +1,5 @@
 package com.ooommm.clontelegramm3.ui.fragments.singlChat
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +65,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
             holder.blockUserImage.isVisible = true
             holder.blockReceivedImage.isVisible = false
             // заполняем view  в холдере
-            holder.chatUserImage.downloadAndSetImage(listMessageCache.get(position).imageUrl)
+            holder.chatUserImage.downloadAndSetImage(listMessageCache.get(position).fileUrl)
             holder.chatUserImageTime.text =
                 listMessageCache.get(position).timeStamp.toString().asTime()
         } else {
@@ -74,7 +73,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
             holder.blockUserImage.isVisible = false
             holder.blocReceivedMessage.isVisible = true
             // заполняем view  в холдере
-            holder.chatReceivedImage.downloadAndSetImage(listMessageCache.get(position).imageUrl)
+            holder.chatReceivedImage.downloadAndSetImage(listMessageCache.get(position).fileUrl)
             holder.chatReceivedImageTime.text =
                 listMessageCache.get(position).timeStamp.toString().asTime()
         }
