@@ -23,6 +23,7 @@ import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
+import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.AppViewFactory
 import com.ooommm.clontelegramm3.ui.fragments.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -150,11 +151,11 @@ class SingleChatFragment(private val contact: CommonModel) :
             val message = it.getCommonModel()
 
             if (isSmoothScrollToPosition) {
-                adapter.addItemToBottom(item = message) {
+                adapter.addItemToBottom(item = AppViewFactory.getVIew(message = message)) {
                     recyclerView.smoothScrollToPosition(adapter.itemCount)
                 }
             } else {
-                adapter.addItemToTop(item = message) {
+                adapter.addItemToTop(item = AppViewFactory.getVIew(message = message)) {
                     swipeRefreshLayout.isRefreshing = false
                 }
             }
