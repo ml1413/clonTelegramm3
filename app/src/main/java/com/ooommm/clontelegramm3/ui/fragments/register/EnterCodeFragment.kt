@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider
-import com.ooommm.clontelegramm3.MainActivity
+import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentEnterCodeBinding
 import com.ooommm.clontelegramm3.utilits.*
 

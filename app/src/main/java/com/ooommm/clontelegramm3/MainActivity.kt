@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.ooommm.clontelegramm3.dataBase.AUTH
+import com.ooommm.clontelegramm3.dataBase.initFirebase
+import com.ooommm.clontelegramm3.dataBase.initUser
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
 import com.ooommm.clontelegramm3.objects.AppDrawer
 import com.ooommm.clontelegramm3.ui.fragments.MainFraagment

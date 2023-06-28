@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import com.ooommm.clontelegramm3.R
+import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -89,7 +90,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 .child(FOLDER_PROFILE_IMAGE)
                 .child(CURRENT_UID)
             //функцыи высшего порядка
-            putImageToStorage(uri, path) {
+            putFileToStorage(uri, path) {
                 getUrlFromStorage(path) {
                     putUrlToDatabase(it) {
                         binding.ivSettingsPhoto.downloadAndSetImage(it)

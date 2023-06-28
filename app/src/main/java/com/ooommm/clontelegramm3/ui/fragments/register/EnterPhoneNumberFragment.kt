@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
-import com.ooommm.clontelegramm3.MainActivity
 import com.ooommm.clontelegramm3.R
+import com.ooommm.clontelegramm3.dataBase.AUTH
 import com.ooommm.clontelegramm3.databinding.FragmentEnterPhoneNumberBinding
 import com.ooommm.clontelegramm3.utilits.*
 import java.util.concurrent.TimeUnit

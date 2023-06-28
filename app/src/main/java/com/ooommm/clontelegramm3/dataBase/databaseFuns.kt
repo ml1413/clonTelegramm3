@@ -1,10 +1,8 @@
-package com.ooommm.clontelegramm3.utilits
+package com.ooommm.clontelegramm3.dataBase
 
 import android.net.Uri
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
@@ -12,37 +10,9 @@ import com.google.firebase.storage.StorageReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
-
-lateinit var AUTH: FirebaseAuth
-lateinit var CURRENT_UID: String
-lateinit var REF_DATABASE_ROOT: DatabaseReference
-lateinit var REF_STORAGE_ROOT: StorageReference
-lateinit var USER: UserModel
-
-const val TYPE_TEXT = "text"
-
-const val NODE_USERS = "users"
-const val NODE_USERNAME = "username"
-const val NODE_PHONES = "phones"
-const val NODE_PHONES_CONTACTS = "phones_contacts"
-const val NODE_MESSAGES = "messages"
-
-const val FOLDER_PROFILE_IMAGE = "profile_image"
-const val FOLDER_MESSAGE_IMAGE = "message_image"
-
-//значения должны совподать со значениями полей модели
-const val CHILD_ID = "id"
-const val CHILD_PHONE = "phone"
-const val CHILD_USER_NAME = "username"
-const val CHILD_FULLNAME = "fullname"
-const val CHILD_BIO = "bio"
-const val CHILD_PHOTO_URL = "photoUrl"
-const val CHILD_STATUS = "state"
-const val CHILD_TEXT = "text"
-const val CHILD_TYPE = "type"
-const val CHILD_FROM = "from"
-const val CHILD_TIMESTAMP = "timeStamp"
-const val CHILD_FILE_URL = "fileUrl"
+import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
+import com.ooommm.clontelegramm3.utilits.AppValueEventListener
+import com.ooommm.clontelegramm3.utilits.showToast
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -68,7 +38,7 @@ inline fun getUrlFromStorage(path: StorageReference, crossinline function: (url:
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline function: () -> Unit) {
+inline fun putFileToStorage(uri: Uri, path: StorageReference, crossinline function: () -> Unit) {
     path.putFile(uri)
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
@@ -89,7 +59,6 @@ inline fun initUser(crossinline function: () -> Unit) {
 
 
 }
-
 
 fun updatePhonesToDatabase(arrayContacts: MutableSet<CommonModel>) {
     if (AUTH.currentUser != null) {
@@ -171,7 +140,6 @@ private fun deleteoldUserName(newUserName: String) {
         }
 }
 
-
 fun setBioToDatabase(newBio: String) {
     REF_DATABASE_ROOT
         .child(NODE_USERS)
@@ -200,17 +168,22 @@ fun setNameToDateBase(fullName: String) {
         }
 }
 
-fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: String) {
-    Log.d("TAG1", "sendMessageAsImage: $imageUrl")
+fun sendMessageAsFile(
+    receivingUserID: String,
+    fileUrl: String,
+    messageKey: String,
+    typeMessage: String
+) {
+
     val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
     val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
 
     val mapMessage = hashMapOf<String, Any>()
     mapMessage.put(CHILD_FROM, CURRENT_UID)
-    mapMessage.put(CHILD_TYPE, TYPE_MESSAGE_IMAGE)
+    mapMessage.put(CHILD_TYPE, typeMessage)
     mapMessage.put(CHILD_ID, messageKey)
     mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
-    mapMessage.put(CHILD_FILE_URL, imageUrl)
+    mapMessage.put(CHILD_FILE_URL, fileUrl)
 
     val mapDialog = hashMapOf<String, Any>()
     mapDialog.put("$refDialogUser/$messageKey", mapMessage)
@@ -227,8 +200,16 @@ fun getMessageKey(contactId: String) = REF_DATABASE_ROOT
     .child(CURRENT_UID)
     .child(contactId).push().key.toString()
 
-fun uploadFileToStorage(uri: Uri, messageKey: String) {
-    showToast("record")
+fun uploadFileToStorage(uri: Uri, messageKey: String, receivedID: String, typeMessage: String) {
+    val path = REF_STORAGE_ROOT
+        .child(FOLDER_FILES)
+        .child(messageKey)
+    //положить ссылку на файл в storage
+    putFileToStorage(uri, path) {
+        getUrlFromStorage(path) {
+            sendMessageAsFile(receivedID, it, messageKey, typeMessage)
+        }
+    }
 }
 
 //extension fun

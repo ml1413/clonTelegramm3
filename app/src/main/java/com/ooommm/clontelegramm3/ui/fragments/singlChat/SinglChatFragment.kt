@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.database.DatabaseReference
 import com.ooommm.clontelegramm3.R
+import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
@@ -106,7 +107,13 @@ class SingleChatFragment(private val contact: CommonModel) :
                         binding.chatBtnVoice.colorFilter = null
 
                         appVoiceRecorder.stopRecord() { file, messageKey ->
-                            uploadFileToStorage(Uri.fromFile(file), messageKey)
+                            uploadFileToStorage(
+                                Uri.fromFile(file),
+                                messageKey,
+                                contact.id,
+                                TYPE_MESSAGE_VOICE
+                            )
+                            isSmoothScrollToPosition = true
                         }
 
                     }
@@ -238,16 +245,8 @@ class SingleChatFragment(private val contact: CommonModel) :
 
             val messageKey = getMessageKey(contact.id)
 
-            val path = REF_STORAGE_ROOT
-                .child(FOLDER_MESSAGE_IMAGE)
-                .child(messageKey)
-            //функцыи высшего порядка
-            putImageToStorage(uri, path) {
-                getUrlFromStorage(path) {
-                    sendMessageAsImage(contact.id, it, messageKey)
-                    isSmoothScrollToPosition = true
-                }
-            }
+            uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+            isSmoothScrollToPosition = true
         }
     }
 

@@ -1,5 +1,7 @@
 package com.ooommm.clontelegramm3.utilits
 
+import com.ooommm.clontelegramm3.dataBase.*
+
 enum class AppStates(val state: String) {
     ONLINE("в сети"),
     OFFLINE("был недавно"),

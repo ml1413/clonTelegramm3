@@ -19,7 +19,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.ui.fragments.ContactsFragment
 import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
-import com.ooommm.clontelegramm3.utilits.USER
+import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
