@@ -151,11 +151,11 @@ class SingleChatFragment(private val contact: CommonModel) :
             val message = it.getCommonModel()
 
             if (isSmoothScrollToPosition) {
-                adapter.addItemToBottom(item = AppViewFactory.getVIew(message = message)) {
+                adapter.addItemToBottom(item = AppViewFactory.getView(message = message)) {
                     recyclerView.smoothScrollToPosition(adapter.itemCount)
                 }
             } else {
-                adapter.addItemToTop(item = AppViewFactory.getVIew(message = message)) {
+                adapter.addItemToTop(item = AppViewFactory.getView(message = message)) {
                     swipeRefreshLayout.isRefreshing = false
                 }
             }

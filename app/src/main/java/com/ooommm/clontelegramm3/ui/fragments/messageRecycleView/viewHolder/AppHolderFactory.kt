@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.MessageView
+import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.ViewVoiceMessage
 
 class AppHolderFactory {
     companion object {
@@ -15,6 +16,11 @@ class AppHolderFactory {
                     val view = LayoutInflater.from(parent.context)
                         .inflate(R.layout.mesage_item_image, parent, false)
                     HolderImageMessage(view)
+                }
+                MessageView.MESSAGE_VOICE -> {
+                    val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.mesage_item_voice, parent, false)
+                    HolderVoiceMessage(view)
                 }
                 else -> {
                     val view = LayoutInflater.from(parent.context)
