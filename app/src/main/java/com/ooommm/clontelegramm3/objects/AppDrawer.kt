@@ -16,8 +16,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.ui.fragments.ContactsFragment
-import com.ooommm.clontelegramm3.ui.fragments.SettingsFragment
+import com.ooommm.clontelegramm3.ui.screens.ContactsFragment
+import com.ooommm.clontelegramm3.ui.screens.SettingsFragment
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage

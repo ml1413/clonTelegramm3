@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments
+package com.ooommm.clontelegramm3.ui.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater

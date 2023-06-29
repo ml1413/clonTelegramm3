@@ -1,12 +1,9 @@
-package com.ooommm.clontelegramm3.ui.fragments.singlChat
+package com.ooommm.clontelegramm3.ui.screens.singlChat
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.viewHolder.AppHolderFactory
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.viewHolder.HolderImageMessage
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.viewHolder.HolderTextMessage
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.viewHolder.HolderVoiceMessage
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.MessageView
+import com.ooommm.clontelegramm3.ui.messageRecycleView.viewHolder.*
+import com.ooommm.clontelegramm3.ui.messageRecycleView.views.MessageView
 
 class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -17,15 +14,7 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is HolderImageMessage ->
-                holder.drawMessageImage(holder = holder, view = listMessageCache[position])
-            is HolderTextMessage ->
-                holder.drawMessageText(holder = holder, view = listMessageCache[position])
-            is HolderVoiceMessage ->
-                holder.drawMessageVoice(holder = holder, view = listMessageCache[position])
-            else -> {}
-        }
+        (holder as MessageHolder).drawHolder(listMessageCache[position])
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -33,6 +22,16 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount() = listMessageCache.size
+
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        (holder as MessageHolder).onAttach(listMessageCache[holder.bindingAdapterPosition])
+        super.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        (holder as MessageHolder).onDettach()
+        super.onViewDetachedFromWindow(holder)
+    }
 
     fun addItemToBottom(item: MessageView, onSuccess: () -> Unit) {
         if (!listMessageCache.contains(item)) {

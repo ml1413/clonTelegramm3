@@ -13,6 +13,7 @@ import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 import com.ooommm.clontelegramm3.utilits.AppValueEventListener
 import com.ooommm.clontelegramm3.utilits.showToast
+import java.io.File
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -210,6 +211,15 @@ fun uploadFileToStorage(uri: Uri, messageKey: String, receivedID: String, typeMe
             sendMessageAsFile(receivedID, it, messageKey, typeMessage)
         }
     }
+}
+
+// скачиваем  файля для проигрывания в случае отсутствия его в системе
+fun getFileFromStorage(file: File, fileUrl: String, function: () -> Unit) {
+    val path = REF_STORAGE_ROOT.storage.getReferenceFromUrl(fileUrl)
+    path.getFile(file)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+
 }
 
 //extension fun

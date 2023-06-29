@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments.register
+package com.ooommm.clontelegramm3.ui.screens.register
 
 import android.os.Bundle
 import android.util.Log

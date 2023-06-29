@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments
+package com.ooommm.clontelegramm3.ui.screens
 
 import androidx.fragment.app.Fragment
 import com.ooommm.clontelegramm3.R

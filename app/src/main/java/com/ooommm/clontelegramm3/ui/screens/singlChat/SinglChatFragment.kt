@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments
+package com.ooommm.clontelegramm3.ui.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,8 +23,8 @@ import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.AppViewFactory
-import com.ooommm.clontelegramm3.ui.fragments.singlChat.SingleChatAdapter
+import com.ooommm.clontelegramm3.ui.messageRecycleView.views.AppViewFactory
+import com.ooommm.clontelegramm3.ui.screens.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.coroutines.CoroutineScope
@@ -172,7 +172,7 @@ class SingleChatFragment(private val contact: CommonModel) :
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                println(recyclerView.recycledViewPool.getRecycledViewCount(0))
+//                println(recyclerView.recycledViewPool.getRecycledViewCount(0))
                 if (isScrolling && dy < 0 && layoutManager.findFirstVisibleItemPosition() <= 3) {
                     updateData()
                 }

@@ -10,8 +10,8 @@ import com.ooommm.clontelegramm3.dataBase.initFirebase
 import com.ooommm.clontelegramm3.dataBase.initUser
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
 import com.ooommm.clontelegramm3.objects.AppDrawer
-import com.ooommm.clontelegramm3.ui.fragments.MainFraagment
-import com.ooommm.clontelegramm3.ui.fragments.register.EnterPhoneNumberFragment
+import com.ooommm.clontelegramm3.ui.screens.MainFraagment
+import com.ooommm.clontelegramm3.ui.screens.register.EnterPhoneNumberFragment
 import com.ooommm.clontelegramm3.utilits.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

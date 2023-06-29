@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views
+package com.ooommm.clontelegramm3.ui.messageRecycleView.views
 
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.utilits.TYPE_MESSAGE_IMAGE

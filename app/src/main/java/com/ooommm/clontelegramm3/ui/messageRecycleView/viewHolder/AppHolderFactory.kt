@@ -1,12 +1,12 @@
-package com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.viewHolder
+package com.ooommm.clontelegramm3.ui.messageRecycleView.viewHolder
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.MessageView
-import com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views.ViewVoiceMessage
+import com.ooommm.clontelegramm3.ui.messageRecycleView.views.MessageView
+import com.ooommm.clontelegramm3.ui.messageRecycleView.views.ViewVoiceMessage
 
 class AppHolderFactory {
     companion object {

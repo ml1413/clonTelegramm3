@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views
+package com.ooommm.clontelegramm3.ui.messageRecycleView.views
 
 interface MessageView {
 

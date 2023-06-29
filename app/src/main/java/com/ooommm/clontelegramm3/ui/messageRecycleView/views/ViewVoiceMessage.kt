@@ -1,13 +1,13 @@
-package com.ooommm.clontelegramm3.ui.fragments.messageRecycleView.views
+package com.ooommm.clontelegramm3.ui.messageRecycleView.views
 
-data class ViewTextMessage(
+data class ViewVoiceMessage(
     override val id: String,
     override val from: String,
     override val timeStamp: String,
-    override val fileUrl: String = "",
+    override val fileUrl: String,
     override val text: String
 ) : MessageView {
     override fun getTypeView(): Int {
-        return MessageView.MESSAGE_TEXT
+        return MessageView.MESSAGE_VOICE
     }
 }
