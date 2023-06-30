@@ -42,7 +42,7 @@ class AppVoicePlayer {
         }
     }
 
-    private fun stop(function: () -> Unit) {
+    fun stop(function: () -> Unit) {
         try {
             mediaPlayer.stop()
             mediaPlayer.reset()

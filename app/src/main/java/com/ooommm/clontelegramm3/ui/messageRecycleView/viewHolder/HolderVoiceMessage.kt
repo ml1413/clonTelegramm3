@@ -18,18 +18,19 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
 
     //Image
     //User
-    val blockUserVoice: ConstraintLayout = view.findViewById(R.id.bloc_user_voice_message)
-    val chatUserVoiceTime: TextView = view.findViewById(R.id.chat_user_voice_time)
+    private val blockUserVoice: ConstraintLayout = view.findViewById(R.id.bloc_user_voice_message)
+    private val chatUserVoiceTime: TextView = view.findViewById(R.id.chat_user_voice_time)
 
-    val chatUserBtnVoicePlay: ImageView = view.findViewById(R.id.chat_user_btn_play)
-    val chatUserBtnVoiceStop: ImageView = view.findViewById(R.id.chat_user_btn_stop)
+    private val chatUserBtnVoicePlay: ImageView = view.findViewById(R.id.chat_user_btn_play)
+    private val chatUserBtnVoiceStop: ImageView = view.findViewById(R.id.chat_user_btn_stop)
 
     //Received
-    val blockReceivedVoice: ConstraintLayout = view.findViewById(R.id.bloc_receiver_voice_message)
-    val chatReceivedVoiceTime: TextView = view.findViewById(R.id.chat_receiver_voice_time)
+    private val blockReceivedVoice: ConstraintLayout =
+        view.findViewById(R.id.bloc_receiver_voice_message)
+    private val chatReceivedVoiceTime: TextView = view.findViewById(R.id.chat_receiver_voice_time)
 
-    val chatReceivedBtnVoicePlay: ImageView = view.findViewById(R.id.chat_received_btn_play)
-    val chatReceivedBtnVoiceStop: ImageView = view.findViewById(R.id.chat_received_btn_stop)
+    private val chatReceivedBtnVoicePlay: ImageView = view.findViewById(R.id.chat_received_btn_play)
+    private val chatReceivedBtnVoiceStop: ImageView = view.findViewById(R.id.chat_received_btn_stop)
 
 
     override fun drawHolder(view: MessageView) {
@@ -57,6 +58,17 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
             chatUserBtnVoicePlay.setOnClickListener {
                 chatUserBtnVoicePlay.isVisible = false
                 chatUserBtnVoiceStop.isVisible = true
+                // подключает стушатель на кнопку стоп
+                chatUserBtnVoiceStop.setOnClickListener {
+                    stop {
+                        // удаляем слушатель нажатия
+                        chatUserBtnVoiceStop.setOnClickListener(null)
+
+                        chatUserBtnVoicePlay.isVisible = true
+                        chatUserBtnVoiceStop.isVisible = false
+                    }
+                }
+
                 play(view) {
                     chatUserBtnVoicePlay.isVisible = true
                     chatUserBtnVoiceStop.isVisible = false
@@ -66,6 +78,17 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
             chatReceivedBtnVoicePlay.setOnClickListener {
                 chatReceivedBtnVoicePlay.isVisible = false
                 chatReceivedBtnVoiceStop.isVisible = true
+
+                chatReceivedBtnVoiceStop.setOnClickListener {
+                    stop {
+                        // удаляем слушатель нажатия
+                        chatReceivedBtnVoiceStop.setOnClickListener(null)
+
+                        chatReceivedBtnVoicePlay.isVisible = true
+                        chatReceivedBtnVoiceStop.isVisible = false
+                    }
+                }
+
                 play(view) {
                     chatReceivedBtnVoicePlay.isVisible = true
                     chatReceivedBtnVoiceStop.isVisible = false
@@ -80,7 +103,13 @@ class HolderVoiceMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
         }
     }
 
-    override fun onDettach() {
+    fun stop(function: () -> Unit) {
+        appVoicePlayer.stop {
+            function()
+        }
+    }
+
+    override fun onDetach() {
         chatUserBtnVoicePlay.setOnClickListener(null)
         chatReceivedBtnVoicePlay.setOnClickListener(null)
         appVoicePlayer.release()

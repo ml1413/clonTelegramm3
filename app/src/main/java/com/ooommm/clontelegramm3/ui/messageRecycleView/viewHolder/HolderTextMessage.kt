@@ -13,14 +13,16 @@ import com.ooommm.clontelegramm3.utilits.asTime
 class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view), MessageHolder {
     //Text
     //User
-    val blockUserMessage: ConstraintLayout = view.findViewById(R.id.bloc_user_message)
-    val chatUserMessage: TextView = view.findViewById(R.id.chat_user_message)
-    val chatUserMessageTime: TextView = view.findViewById(R.id.chat_user_time)
+    private val blockUserMessage: ConstraintLayout = view.findViewById(R.id.bloc_user_message)
+    private val chatUserMessage: TextView = view.findViewById(R.id.chat_user_message)
+    private val chatUserMessageTime: TextView = view.findViewById(R.id.chat_user_time)
 
     //Received
-    val blocReceivedMessage: ConstraintLayout = view.findViewById(R.id.bloc_receiver_message)
-    val chatReceivedMessage: TextView = view.findViewById(R.id.chat_receiver_message)
-    val chatReceivedMessageTime: TextView = view.findViewById(R.id.chat_receiver_time)
+    private val blocReceivedMessage: ConstraintLayout =
+        view.findViewById(R.id.bloc_receiver_message)
+
+    private val chatReceivedMessage: TextView = view.findViewById(R.id.chat_receiver_message)
+    private val chatReceivedMessageTime: TextView = view.findViewById(R.id.chat_receiver_time)
 
 
     override fun drawHolder(view: MessageView) {
@@ -43,10 +45,11 @@ class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view), MessageHold
 
         }
     }
+
     override fun onAttach(view: MessageView) {
     }
 
-    override fun onDettach() {
+    override fun onDetach() {
     }
 
 }

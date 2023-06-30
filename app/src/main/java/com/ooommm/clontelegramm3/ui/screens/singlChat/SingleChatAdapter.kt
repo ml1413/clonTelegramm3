@@ -8,6 +8,7 @@ import com.ooommm.clontelegramm3.ui.messageRecycleView.views.MessageView
 class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var listMessageCache = mutableListOf<MessageView>()
+    private var listHolders = mutableListOf<MessageHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return AppHolderFactory.getHolder(parent = parent, viewType = viewType)
@@ -25,11 +26,13 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         (holder as MessageHolder).onAttach(listMessageCache[holder.bindingAdapterPosition])
+        listHolders.add((holder as MessageHolder))
         super.onViewAttachedToWindow(holder)
     }
 
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-        (holder as MessageHolder).onDettach()
+        (holder as MessageHolder).onDetach()
+        listHolders.remove((holder as MessageHolder))
         super.onViewDetachedFromWindow(holder)
     }
 
@@ -48,6 +51,10 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notifyItemInserted(0)
         }
         onSuccess()
+    }
+
+    fun destroy() {
+        listHolders.forEach { it.onDetach() }
     }
 
 }

@@ -15,14 +15,14 @@ import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 class HolderImageMessage(view: View) : RecyclerView.ViewHolder(view), MessageHolder {
     //Image
     //User
-    val blockUserImage: ConstraintLayout = view.findViewById(R.id.bloc_user_Image)
-    val chatUserImage: ImageView = view.findViewById(R.id.chat_user_image)
-    val chatUserImageTime: TextView = view.findViewById(R.id.chat_user_image_time)
+    private val blockUserImage: ConstraintLayout = view.findViewById(R.id.bloc_user_Image)
+    private val chatUserImage: ImageView = view.findViewById(R.id.chat_user_image)
+    private val chatUserImageTime: TextView = view.findViewById(R.id.chat_user_image_time)
 
     //Received
-    val blockReceivedImage: ConstraintLayout = view.findViewById(R.id.bloc_received_Image)
-    val chatReceivedImage: ImageView = view.findViewById(R.id.chat_received_image)
-    val chatReceivedImageTime: TextView = view.findViewById(R.id.chat_user_image_time)
+    private val blockReceivedImage: ConstraintLayout = view.findViewById(R.id.bloc_received_Image)
+    private val chatReceivedImage: ImageView = view.findViewById(R.id.chat_received_image)
+    private val chatReceivedImageTime: TextView = view.findViewById(R.id.chat_user_image_time)
 
 
     override fun drawHolder(view: MessageView) {
@@ -48,7 +48,7 @@ class HolderImageMessage(view: View) : RecyclerView.ViewHolder(view), MessageHol
     override fun onAttach(view: MessageView) {
     }
 
-    override fun onDettach() {
+    override fun onDetach() {
     }
 
 }

@@ -267,5 +267,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         super.onDestroy()
         // удаляем рекордэр
         appVoiceRecorder.releaseRecord()
+        //уничтожить стушатели
+        adapter.destroy()
     }
 }
