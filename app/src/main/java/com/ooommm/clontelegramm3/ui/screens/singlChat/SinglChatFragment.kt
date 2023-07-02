@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.database.DatabaseReference
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.*
@@ -50,6 +51,7 @@ class SingleChatFragment(private val contact: CommonModel) :
     private var countMessages = 10
     private var isScrolling = false
     private var isSmoothScrollToPosition = true
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,6 +70,12 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        // инициализация
+        bottomSheetBehavior =
+            BottomSheetBehavior.from(APP_ACTIVITY.findViewById(R.id.bottom_sheet_choice))
+        //устанавливаем состояние (скрыто)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
         appVoiceRecorder = AppVoiceRecorder()
         swipeRefreshLayout = binding.chatSwipeRefresh
         layoutManager = LinearLayoutManager(this.context)
@@ -84,9 +92,10 @@ class SingleChatFragment(private val contact: CommonModel) :
                 binding.chatBtnVoice.isVisible = false
             }
         })
+        //слушатель на кнопку (скрепка)
+        binding.chatBtnAttach.setOnClickListener { attach() }
 
-        binding.chatBtnAttach.setOnClickListener { attachFile() }
-
+        // слушатель на клопку (запись)
         CoroutineScope(Dispatchers.IO).launch {
             binding.chatBtnVoice.setOnTouchListener { v, event ->
 
@@ -124,8 +133,31 @@ class SingleChatFragment(private val contact: CommonModel) :
         }
     }
 
+    private fun attach() {
+        // меняем состояние (показать
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+        // слушатель на кнопку (добавить файл)
+        APP_ACTIVITY
+            .findViewById<ImageView>(R.id.btn_attach_file)
+            .setOnClickListener { attachFile() }
+
+        // слушатель на кнопку (добавить изображение)
+        APP_ACTIVITY
+            .findViewById<ImageView>(R.id.btn_attach_image)
+            .setOnClickListener {
+                attachImage()
+            }
+    }
 
     private fun attachFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
+    }
+
+
+    private fun attachImage() {
         CropImage.activity()
             .setAspectRatio(1, 1)//соотношение сторон
             .setRequestedSize(250, 250)// обрежет фото если оно больше чем 600 х 600
@@ -237,17 +269,27 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (
-            requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-            && resultCode == Activity.RESULT_OK
-            && data != null
-        ) {
-            val uri = CropImage.getActivityResult(data).uri
 
-            val messageKey = getMessageKey(contact.id)
+        if (data != null) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val uri = CropImage.getActivityResult(data).uri
 
-            uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
-            isSmoothScrollToPosition = true
+                    val messageKey = getMessageKey(contact.id)
+
+                    uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+                    isSmoothScrollToPosition = true
+                }
+
+                PICK_FILE_REQUEST_CODE -> {
+                    val uri = data.data
+
+                    val messageKey = getMessageKey(contact.id)
+
+                    uri?.let { uploadFileToStorage(it, messageKey, contact.id, TYPE_FILE) }
+                    isSmoothScrollToPosition = true
+                }
+            }
         }
     }
 
