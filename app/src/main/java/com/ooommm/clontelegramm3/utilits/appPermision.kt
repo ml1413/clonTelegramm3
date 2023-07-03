@@ -9,6 +9,7 @@ import java.security.Permission
 
 const val READ_CONTACTS = Manifest.permission.READ_CONTACTS
 const val RECORD_AUDIO = Manifest.permission.RECORD_AUDIO
+const val WRITE_FILES = Manifest.permission.WRITE_EXTERNAL_STORAGE
 const val PERMISSION_CODE = 200
 
 fun checkPermission(permission: String): Boolean {

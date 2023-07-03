@@ -1,10 +1,10 @@
 package com.ooommm.clontelegramm3.ui.screens
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -286,7 +286,18 @@ class SingleChatFragment(private val contact: CommonModel) :
 
                     val messageKey = getMessageKey(contact.id)
 
-                    uri?.let { uploadFileToStorage(it, messageKey, contact.id, TYPE_FILE) }
+                    val fileName = uri?.let { getFileNameFromUri(it) }
+                    uri?.let {
+                        fileName?.let { it1 ->
+                            uploadFileToStorage(
+                                it,
+                                messageKey,
+                                contact.id,
+                                TYPE_MESSAGE_FILE,
+                                it1
+                            )
+                        }
+                    }
                     isSmoothScrollToPosition = true
                 }
             }

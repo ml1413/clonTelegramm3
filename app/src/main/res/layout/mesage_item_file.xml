@@ -9,7 +9,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bloc_receiver_voice_message"
+        android:id="@+id/bloc_receiver_file_message"
         android:layout_width="@dimen/chat_common_width"
         android:layout_height="@dimen/chat_common_height"
         android:layout_margin="@dimen/margin"
@@ -20,48 +20,56 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/chat_received_btn_play"
+            android:id="@+id/chat_received_btn_download"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_baseline_play_circle_24"
+            android:layout_margin="@dimen/margin"
+            android:src="@drawable/ic_baseline_sim_card_download_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/chat_received_btn_stop"
+        <ProgressBar
+            android:id="@+id/chat_received_progressbar"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_baseline_stop_circle_24"
-            android:visibility="gone"
+            android:layout_margin="@dimen/margin"
+            android:indeterminateTint="@color/white"
+            android:padding="@dimen/margin"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
-            android:id="@+id/chat_receiver_voice_message"
-            android:layout_width="match_parent"
+            android:id="@+id/chat_receiver_file_message"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="end"
+            android:maxLines="1"
             android:padding="@dimen/appPadding"
+            android:singleLine="true"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/chat_received_btn_download"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Привет я иван" />
 
         <TextView
-            android:id="@+id/chat_receiver_voice_time"
+            android:id="@+id/chat_receiver_file_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/appPadding"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/chat_receiver_voice_message"
+            app:layout_constraintEnd_toEndOf="@id/chat_receiver_file_message"
             tools:text="21:45" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bloc_user_voice_message"
+        android:id="@+id/bloc_user_file_message"
         android:layout_width="@dimen/chat_common_width"
         android:layout_height="@dimen/chat_common_height"
         android:layout_margin="@dimen/margin"
@@ -72,43 +80,51 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/chat_user_btn_play"
+            android:id="@+id/chat_user_btn_download"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_baseline_play_circle_24"
+            android:layout_margin="@dimen/margin"
+            android:src="@drawable/ic_baseline_sim_card_download_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/chat_user_btn_stop"
+        <ProgressBar
+            android:id="@+id/chat_user_progressbar"
             android:layout_width="@dimen/chat_btn_width"
             android:layout_height="@dimen/chat_btn_height"
-            android:src="@drawable/ic_baseline_stop_circle_24"
-            android:visibility="gone"
+            android:layout_margin="@dimen/margin"
+            android:indeterminateTint="@color/white"
+            android:padding="@dimen/margin"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
-            android:id="@+id/chat_user_voice_message"
-            android:layout_width="match_parent"
+            android:id="@+id/chat_user_file_message"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="end"
+            android:maxLines="1"
             android:padding="@dimen/appPadding"
+            android:singleLine="true"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/chat_user_btn_download"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Привет я иван" />
 
         <TextView
-            android:id="@+id/chat_user_voice_time"
-            android:layout_width="wrap_content"
+            android:id="@+id/chat_user_file_time"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/appPadding"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/chat_user_voice_message"
+            app:layout_constraintEnd_toEndOf="@id/chat_user_file_message"
             tools:text="21:45" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

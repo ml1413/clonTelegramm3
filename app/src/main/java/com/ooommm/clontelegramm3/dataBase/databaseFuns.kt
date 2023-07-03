@@ -1,6 +1,7 @@
 package com.ooommm.clontelegramm3.dataBase
 
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
@@ -173,7 +174,8 @@ fun sendMessageAsFile(
     receivingUserID: String,
     fileUrl: String,
     messageKey: String,
-    typeMessage: String
+    typeMessage: String,
+    filename: String
 ) {
 
     val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
@@ -185,6 +187,7 @@ fun sendMessageAsFile(
     mapMessage.put(CHILD_ID, messageKey)
     mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
     mapMessage.put(CHILD_FILE_URL, fileUrl)
+    mapMessage.put(CHILD_TEXT, filename)
 
     val mapDialog = hashMapOf<String, Any>()
     mapDialog.put("$refDialogUser/$messageKey", mapMessage)
@@ -201,14 +204,20 @@ fun getMessageKey(contactId: String) = REF_DATABASE_ROOT
     .child(CURRENT_UID)
     .child(contactId).push().key.toString()
 
-fun uploadFileToStorage(uri: Uri, messageKey: String, receivedID: String, typeMessage: String) {
+fun uploadFileToStorage(
+    uri: Uri,
+    messageKey: String,
+    receivedID: String,
+    typeMessage: String,
+    fileName: String = ""
+) {
     val path = REF_STORAGE_ROOT
         .child(FOLDER_FILES)
         .child(messageKey)
     //положить ссылку на файл в storage
     putFileToStorage(uri, path) {
         getUrlFromStorage(path) {
-            sendMessageAsFile(receivedID, it, messageKey, typeMessage)
+            sendMessageAsFile(receivedID, it, messageKey, typeMessage, fileName)
         }
     }
 }
@@ -218,7 +227,9 @@ fun getFileFromStorage(file: File, fileUrl: String, function: () -> Unit) {
     val path = REF_STORAGE_ROOT.storage.getReferenceFromUrl(fileUrl)
     path.getFile(file)
         .addOnSuccessListener { function() }
-        .addOnFailureListener { showToast(it.message.toString()) }
+        .addOnFailureListener { showToast(it.message.toString())
+            Log.d("TAG1", "getFileFromStorage: ${it.message}")
+        }
 
 }
 
