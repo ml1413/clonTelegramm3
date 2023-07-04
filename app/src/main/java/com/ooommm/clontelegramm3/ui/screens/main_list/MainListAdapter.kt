@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
+import com.ooommm.clontelegramm3.ui.screens.SingleChatFragment
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
+import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
     val listItem = mutableListOf<CommonModel>()
@@ -24,7 +26,14 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.main_list_item, parent, false)
-        return MainListHolder(view)
+
+        val holder = MainListHolder(view)
+        // устанавливаем слушатель (нажатие на item)
+        holder.itemView.setOnClickListener {
+            // открываем фрагмент SingleChatFragment
+            replaceFragment(SingleChatFragment(listItem[holder.bindingAdapterPosition]))
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: MainListHolder, position: Int) {

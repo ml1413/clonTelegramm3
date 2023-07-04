@@ -5,10 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,6 +22,7 @@ import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.ui.messageRecycleView.views.AppViewFactory
+import com.ooommm.clontelegramm3.ui.screens.settings.ChangeNameFragment
 import com.ooommm.clontelegramm3.ui.screens.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -63,6 +61,7 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     override fun onResume() {
         super.onResume()
+
         initFields()
         initToolbar()
         initRecycleView()
@@ -70,6 +69,9 @@ class SingleChatFragment(private val contact: CommonModel) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initFields() {
+        // инициализация меню
+        setHasOptionsMenu(true)
+
         // инициализация
         bottomSheetBehavior =
             BottomSheetBehavior.from(APP_ACTIVITY.findViewById(R.id.bottom_sheet_choice))
@@ -318,6 +320,24 @@ class SingleChatFragment(private val contact: CommonModel) :
 
         refMessage.removeEventListener(messageListener)
 
+    }
+
+    // раздуваем меню
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        APP_ACTIVITY.menuInflater.inflate(R.menu.single_chat_action_menu, menu)
+    }
+
+    // обработка нажатия на пункты меню
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_clear_chat -> {
+
+            }
+            R.id.delete_chat -> {
+
+            }
+        }
+        return true
     }
 
     override fun onDestroy() {

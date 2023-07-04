@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.screens
+package com.ooommm.clontelegramm3.ui.screens.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.dataBase.setBioToDatabase
 import com.ooommm.clontelegramm3.databinding.FragmentChangeBiofragmentBinding
+import com.ooommm.clontelegramm3.ui.screens.BaseChangeFragment
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_biofragment) {
     private lateinit var binding: FragmentChangeBiofragmentBinding
