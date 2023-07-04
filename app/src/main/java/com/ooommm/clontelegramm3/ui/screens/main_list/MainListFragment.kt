@@ -47,7 +47,13 @@ class MainListFragment : Fragment(R.layout.fragment_main_list) {
                         refMessages.child(model.id).limitToLast(1)//запрос последнего элемента
                             .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot2 ->
                                 val tempList = dataSnapshot2.children.map { it.getCommonModel() }
-                                newModel.lastMessage = tempList[0].text
+
+                                if (tempList.isEmpty()) {
+                                    newModel.lastMessage = "Чат пуст"
+                                } else {
+                                    newModel.lastMessage = tempList[0].text
+                                }
+
                                 // если поле имени пустое устанавливаем номер вместо имени
                                 if (newModel.fullname.isEmpty()) {
                                     newModel.fullname = newModel.phone

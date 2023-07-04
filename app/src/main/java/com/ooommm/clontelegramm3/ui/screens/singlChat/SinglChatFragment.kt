@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.AbsListView
 import android.widget.ImageView
@@ -22,7 +21,7 @@ import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.ui.messageRecycleView.views.AppViewFactory
-import com.ooommm.clontelegramm3.ui.screens.settings.ChangeNameFragment
+import com.ooommm.clontelegramm3.ui.screens.main_list.MainListFragment
 import com.ooommm.clontelegramm3.ui.screens.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
@@ -330,15 +329,22 @@ class SingleChatFragment(private val contact: CommonModel) :
     // обработка нажатия на пункты меню
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_clear_chat -> {
-
+            R.id.menu_clear_chat -> clearChat(id = contact.id) {
+                showToast("чат очещен")
+                // после очистки чаты переходим на MainListFragment()
+                replaceFragment(MainListFragment())
             }
-            R.id.delete_chat -> {
 
+            R.id.delete_chat -> deleteChat(id = contact.id) {
+                // посте удаления чата переходим на MainListFragment()
+                showToast("Чат Удален")
+                replaceFragment(MainListFragment())
             }
         }
         return true
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
