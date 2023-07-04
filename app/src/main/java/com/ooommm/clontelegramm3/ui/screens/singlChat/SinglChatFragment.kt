@@ -242,12 +242,16 @@ class SingleChatFragment(private val contact: CommonModel) :
                 showToast("Введите сообщение")
             } else {
                 sendMessage(message, contact.id, TYPE_TEXT) {
+
+                    saveToMailList(contact.id, TYPE_CHAT)
+
                     binding.chatInputMessage.setText("")
                 }
             }
 
         }
     }
+
 
     private fun initInfoToolbar() {
         toolbarInfo.findViewById<ImageView>(R.id.toolbar_chat_image)

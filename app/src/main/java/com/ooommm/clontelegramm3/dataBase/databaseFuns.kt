@@ -227,11 +227,32 @@ fun getFileFromStorage(file: File, fileUrl: String, function: () -> Unit) {
     val path = REF_STORAGE_ROOT.storage.getReferenceFromUrl(fileUrl)
     path.getFile(file)
         .addOnSuccessListener { function() }
-        .addOnFailureListener { showToast(it.message.toString())
+        .addOnFailureListener {
+            showToast(it.message.toString())
             Log.d("TAG1", "getFileFromStorage: ${it.message}")
         }
 
 }
+
+fun saveToMailList(id: String, type: String) {
+    val refUser = "$NODE_MAIN_LIST/$CURRENT_UID/$id"
+    val refReceived = "$NODE_MAIN_LIST/$id/$CURRENT_UID"
+
+    val userMap = hashMapOf<String, Any>()
+    val receivedMap = hashMapOf<String, Any>()
+    userMap.put(CHILD_ID, id)
+    userMap.put(CHILD_TYPE, type)
+    receivedMap.put(CHILD_ID, CURRENT_UID)
+    receivedMap.put(CHILD_TYPE, type)
+
+    val commonMap = hashMapOf<String, Any>()
+    commonMap.put(refUser, userMap)
+    commonMap.put(refReceived, receivedMap)
+
+    REF_DATABASE_ROOT.updateChildren(commonMap)
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
+
 
 //extension fun
 fun DataSnapshot.getCommonModel(): CommonModel {

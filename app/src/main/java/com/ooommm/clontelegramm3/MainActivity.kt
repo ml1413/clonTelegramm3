@@ -10,7 +10,7 @@ import com.ooommm.clontelegramm3.dataBase.initFirebase
 import com.ooommm.clontelegramm3.dataBase.initUser
 import com.ooommm.clontelegramm3.databinding.ActivityMainBinding
 import com.ooommm.clontelegramm3.objects.AppDrawer
-import com.ooommm.clontelegramm3.ui.screens.MainFraagment
+import com.ooommm.clontelegramm3.ui.screens.main_list.MainListFragment
 import com.ooommm.clontelegramm3.ui.screens.register.EnterPhoneNumberFragment
 import com.ooommm.clontelegramm3.utilits.*
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         if (AUTH.currentUser != null) {//firebase check user Authentication
 
-            replaceFragment(MainFraagment(), false)//setFragment on Container 1
+            replaceFragment(MainListFragment(), false)//setFragment on Container 1
 
             appDrawer.create() // create header & drawer2
         } else {
