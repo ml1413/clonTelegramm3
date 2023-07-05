@@ -1,5 +1,7 @@
 package com.ooommm.clontelegramm3.ui.screens.groups
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -9,15 +11,20 @@ import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 import com.ooommm.clontelegramm3.utilits.AppValueEventListener
 import com.ooommm.clontelegramm3.utilits.hideKeyboard
+import com.ooommm.clontelegramm3.utilits.replaceFragment
+import java.util.Collections
+import java.util.stream.Collector
+import java.util.stream.Collectors
 
 class AddContactFragment : Fragment(R.layout.fradment_add_contacts) {
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: AddContactsAdapter
 
     companion object {
         val listContact = mutableListOf<CommonModel>()
     }
+
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var adapter: AddContactsAdapter
 
     private val refMainList = REF_DATABASE_ROOT
         .child(NODE_MAIN_LIST)
@@ -29,6 +36,7 @@ class AddContactFragment : Fragment(R.layout.fradment_add_contacts) {
         .child(CURRENT_UID)
     private var listItem = listOf<CommonModel>()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onResume() {
         super.onResume()
         APP_ACTIVITY.title = "Добавить участника"
@@ -37,9 +45,7 @@ class AddContactFragment : Fragment(R.layout.fradment_add_contacts) {
         initRecycleView()
         APP_ACTIVITY.findViewById<FloatingActionButton>(R.id.add_contacts_btn_next)
             .setOnClickListener {
-                listContact.forEach {
-                    println(it.id)
-                }
+                replaceFragment(CreateGroupFragment(listContact = listContact))
             }
     }
 
