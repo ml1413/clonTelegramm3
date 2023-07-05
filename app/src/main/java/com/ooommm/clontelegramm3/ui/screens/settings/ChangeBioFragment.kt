@@ -8,7 +8,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.dataBase.setBioToDatabase
 import com.ooommm.clontelegramm3.databinding.FragmentChangeBiofragmentBinding
-import com.ooommm.clontelegramm3.ui.screens.BaseChangeFragment
+import com.ooommm.clontelegramm3.ui.screens.base.BaseChangeFragment
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_biofragment) {
     private lateinit var binding: FragmentChangeBiofragmentBinding

@@ -13,7 +13,7 @@ import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
 class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
-    val listItem = mutableListOf<CommonModel>()
+    private val listItem = mutableListOf<CommonModel>()
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     class MainListHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -16,10 +16,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import com.ooommm.clontelegramm3.R
-import com.ooommm.clontelegramm3.ui.screens.ContactsFragment
+import com.ooommm.clontelegramm3.dataBase.USER
+import com.ooommm.clontelegramm3.ui.screens.contacts.ContactsFragment
+import com.ooommm.clontelegramm3.ui.screens.groups.AddContactFragment
 import com.ooommm.clontelegramm3.ui.screens.settings.SettingsFragment
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
-import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
@@ -96,15 +97,6 @@ class AppDrawer {
                     .withName("Создать секретный чат")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_lock_24),
-
-
-                //-------------------------------------------------------------------------------
-                PrimaryDrawerItem()
-                    .withIdentifier(102)
-                    .withIconTintingEnabled(true)
-                    .withName("Создать группу")
-                    .withSelectable(false)
-                    .withIcon(R.drawable.ic_baseline_group_24),
 
 
                 //-------------------------------------------------------------------------------
@@ -193,6 +185,7 @@ class AppDrawer {
 
     private fun clickToItem(drawerItem: IDrawerItem<*>) {
         when (drawerItem.identifier.toInt()) {
+            100 -> replaceFragment(AddContactFragment())
             107 -> replaceFragment(SettingsFragment())
             104 -> replaceFragment(ContactsFragment())
         }

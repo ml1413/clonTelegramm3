@@ -21,6 +21,7 @@ import com.ooommm.clontelegramm3.databinding.FragmentSinglChatBinding
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.ui.messageRecycleView.views.AppViewFactory
+import com.ooommm.clontelegramm3.ui.screens.base.BaseFragment
 import com.ooommm.clontelegramm3.ui.screens.main_list.MainListFragment
 import com.ooommm.clontelegramm3.ui.screens.singlChat.SingleChatAdapter
 import com.ooommm.clontelegramm3.utilits.*

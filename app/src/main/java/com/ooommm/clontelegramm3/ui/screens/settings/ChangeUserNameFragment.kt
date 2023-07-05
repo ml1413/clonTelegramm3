@@ -5,7 +5,7 @@ import android.view.*
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentChangeUserNameBinding
-import com.ooommm.clontelegramm3.ui.screens.BaseChangeFragment
+import com.ooommm.clontelegramm3.ui.screens.base.BaseChangeFragment
 import com.ooommm.clontelegramm3.utilits.*
 import java.util.*
 

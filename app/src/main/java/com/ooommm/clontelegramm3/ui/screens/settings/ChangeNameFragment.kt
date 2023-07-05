@@ -6,7 +6,7 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.USER
 import com.ooommm.clontelegramm3.dataBase.setNameToDateBase
 import com.ooommm.clontelegramm3.databinding.FragmentChangeNameBinding
-import com.ooommm.clontelegramm3.ui.screens.BaseChangeFragment
+import com.ooommm.clontelegramm3.ui.screens.base.BaseChangeFragment
 import com.ooommm.clontelegramm3.utilits.*
 
 class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {

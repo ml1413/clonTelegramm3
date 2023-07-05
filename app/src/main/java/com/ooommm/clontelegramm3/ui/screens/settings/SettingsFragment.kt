@@ -7,7 +7,7 @@ import android.view.*
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentSettingsBinding
-import com.ooommm.clontelegramm3.ui.screens.BaseFragment
+import com.ooommm.clontelegramm3.ui.screens.base.BaseFragment
 import com.ooommm.clontelegramm3.utilits.*
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView

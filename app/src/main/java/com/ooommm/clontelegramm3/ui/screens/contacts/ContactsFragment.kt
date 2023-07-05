@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.screens
+package com.ooommm.clontelegramm3.ui.screens.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.databinding.FragmentContactsBinding
 import com.ooommm.clontelegramm3.models.CommonModel
+import com.ooommm.clontelegramm3.ui.screens.base.BaseFragment
+import com.ooommm.clontelegramm3.ui.screens.SingleChatFragment
 import com.ooommm.clontelegramm3.utilits.*
 
 

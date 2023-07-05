@@ -1,4 +1,4 @@
-package com.ooommm.clontelegramm3.ui.screens
+package com.ooommm.clontelegramm3.ui.screens.base
 
 import android.view.Menu
 import android.view.MenuInflater
