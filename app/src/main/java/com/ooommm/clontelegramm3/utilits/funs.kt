@@ -126,4 +126,12 @@ fun getFileNameFromUri(uri: Uri): String {
     return result
 }
 
+fun getPlurals(count: Int): String {
+    return when (if (count > 20) count % 10 else count) {
+        in 2..4 -> APP_ACTIVITY.getString(R.string.few_people, count)
+        in 5..20 -> APP_ACTIVITY.getString(R.string.other_people, count)
+        else -> APP_ACTIVITY.getString(R.string.one_people, count)
+    }
+}
+
 

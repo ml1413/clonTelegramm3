@@ -8,15 +8,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.models.CommonModel
-import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
-import com.ooommm.clontelegramm3.utilits.AppValueEventListener
-import com.ooommm.clontelegramm3.utilits.hideKeyboard
-import com.ooommm.clontelegramm3.utilits.replaceFragment
+import com.ooommm.clontelegramm3.ui.screens.base.BaseFragment
+import com.ooommm.clontelegramm3.utilits.*
 import java.util.Collections
 import java.util.stream.Collector
 import java.util.stream.Collectors
 
-class AddContactFragment : Fragment(R.layout.fradment_add_contacts) {
+class AddContactFragment : BaseFragment(R.layout.fradment_add_contacts) {
 
     companion object {
         val listContact = mutableListOf<CommonModel>()
@@ -36,17 +34,22 @@ class AddContactFragment : Fragment(R.layout.fradment_add_contacts) {
         .child(CURRENT_UID)
     private var listItem = listOf<CommonModel>()
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onResume() {
         super.onResume()
+        // очистить список  во избежания дублей
+        listContact.clear()
+
         APP_ACTIVITY.title = "Добавить участника"
-        APP_ACTIVITY.appDrawer.enableDrawer()
         hideKeyboard()
         initRecycleView()
+
         APP_ACTIVITY.findViewById<FloatingActionButton>(R.id.add_contacts_btn_next)
             .setOnClickListener {
-                replaceFragment(CreateGroupFragment(listContact = listContact))
+                // проверка  выбран ли елемент для добавления в группу
+                if (listContact.isEmpty()) showToast("Не выбран ни одит элемент")
+                else replaceFragment(CreateGroupFragment(listContact = listContact))
             }
+
     }
 
     private fun initRecycleView() {

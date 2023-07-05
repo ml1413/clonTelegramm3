@@ -40,6 +40,7 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
         super.onResume()
         APP_ACTIVITY.title = "Контакты"
         initRecycleView()
+
     }
 
     private fun initRecycleView() {
@@ -102,11 +103,9 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
     override fun onPause() {
         super.onPause()
         adapter.stopListening()
-        println()
         mapListeners.forEach {
             it.key.removeEventListener(it.value)
         }
-        println()
     }
 }
 

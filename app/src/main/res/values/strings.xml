@@ -31,4 +31,11 @@
     <string name="clear_chat">очистить чат</string>
     <string name="delete_chat">удалить чат</string>
     <string name="create_group">Создать Группу</string>
+
+
+    <string name="one_people"> %d участник</string>
+    <string name="few_people">%d участника</string>
+    <string name="other_people">%d участников</string>
+
+
 </resources>

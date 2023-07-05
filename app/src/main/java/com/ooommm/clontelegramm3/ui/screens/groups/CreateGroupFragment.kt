@@ -1,6 +1,7 @@
 package com.ooommm.clontelegramm3.ui.screens.groups
 
 import android.widget.EditText
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ooommm.clontelegramm3.R
@@ -18,7 +19,6 @@ class CreateGroupFragment(private var listContact: MutableList<CommonModel>) :
     override fun onResume() {
         super.onResume()
         APP_ACTIVITY.title = getString(R.string.create_group)
-        APP_ACTIVITY.appDrawer.enableDrawer()
         hideKeyboard()
         initRecycleView()
         APP_ACTIVITY.findViewById<FloatingActionButton>(R.id.create_group_btn_complete)
@@ -26,6 +26,8 @@ class CreateGroupFragment(private var listContact: MutableList<CommonModel>) :
                 showToast("click")
             }
         APP_ACTIVITY.findViewById<EditText>(R.id.create_group_input_name).requestFocus()
+        APP_ACTIVITY.findViewById<TextView>(R.id.create_group_counts).text =
+            getPlurals(listContact.size)
     }
 
     private fun initRecycleView() {
