@@ -283,6 +283,43 @@ fun clearChat(id: String, function: () -> Unit) {
 }
 
 
+fun createGroupToDataBase(
+    nameGroup: String,
+    uri: Uri,
+    listContacts: MutableList<CommonModel>,
+    function: () -> Unit
+) {
+    val keyGroup = REF_DATABASE_ROOT.child(NODE_GROUPS).push().key.toString()
+    val path = REF_DATABASE_ROOT.child(NODE_GROUPS).child(keyGroup)
+    val pathStorage = REF_STORAGE_ROOT.child(FOLDER_GROUPS_IMAGE).child(keyGroup)
+
+    val mapData = hashMapOf<String, Any>()
+    mapData.put(CHILD_ID, keyGroup)
+    mapData.put(CHILD_FULLNAME, nameGroup)
+    val mapMembers = hashMapOf<String, Any>()
+
+    listContacts.forEach {
+        mapMembers.put(it.id, USER_MEMBER)
+    }
+    mapMembers.put(CURRENT_UID, USER_CREATOR)
+
+    mapData.put(NODE_MEMBERS, mapMembers)
+
+    path.updateChildren(mapData)
+        .addOnSuccessListener {
+            function()
+            if (uri != Uri.EMPTY) {
+                putFileToStorage(uri, pathStorage) {
+                    getUrlFromStorage(pathStorage) {
+                        path.child(CHILD_FILE_URL).setValue(it)
+                    }
+                }
+            }
+        }
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+
 //extension fun
 fun DataSnapshot.getCommonModel(): CommonModel {
     return this.getValue(CommonModel::class.java) ?: CommonModel()

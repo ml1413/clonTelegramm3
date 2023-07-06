@@ -17,10 +17,16 @@ const val NODE_PHONES = "phones"
 const val NODE_PHONES_CONTACTS = "phones_contacts"
 const val NODE_MESSAGES = "messages"
 const val NODE_MAIN_LIST = "main_list"
+const val NODE_GROUPS = "groups"
+const val NODE_MEMBERS = "members"
 
+const val USER_CREATOR = "creator"
+const val USER_ADMIN = "admin"
+const val USER_MEMBER = "member"
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
 const val FOLDER_FILES = "messages_files"
+const val FOLDER_GROUPS_IMAGE = "groups_image"
 
 //значения должны совподать со значениями полей модели
 const val CHILD_ID = "id"
