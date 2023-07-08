@@ -9,6 +9,9 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.ooommm.clontelegramm3.R
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.ui.screens.SingleChatFragment
+import com.ooommm.clontelegramm3.ui.screens.groups.GroupChatFragment
+import com.ooommm.clontelegramm3.utilits.TYPE_CHAT
+import com.ooommm.clontelegramm3.utilits.TYPE_GROUP
 import com.ooommm.clontelegramm3.utilits.downloadAndSetImage
 import com.ooommm.clontelegramm3.utilits.replaceFragment
 
@@ -31,7 +34,10 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
         // устанавливаем слушатель (нажатие на item)
         holder.itemView.setOnClickListener {
             // открываем фрагмент SingleChatFragment
-            replaceFragment(SingleChatFragment(listItem[holder.bindingAdapterPosition]))
+            when (listItem[holder.bindingAdapterPosition].type) {
+                TYPE_CHAT -> replaceFragment(SingleChatFragment(listItem[holder.bindingAdapterPosition]))
+                TYPE_GROUP -> replaceFragment(GroupChatFragment(listItem[holder.bindingAdapterPosition]))
+            }
         }
         return holder
     }

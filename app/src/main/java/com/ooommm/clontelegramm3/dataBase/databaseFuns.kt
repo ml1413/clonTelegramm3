@@ -13,6 +13,7 @@ import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.models.UserModel
 import com.ooommm.clontelegramm3.utilits.APP_ACTIVITY
 import com.ooommm.clontelegramm3.utilits.AppValueEventListener
+import com.ooommm.clontelegramm3.utilits.TYPE_GROUP
 import com.ooommm.clontelegramm3.utilits.showToast
 import java.io.File
 
@@ -296,6 +297,7 @@ fun createGroupToDataBase(
     val mapData = hashMapOf<String, Any>()
     mapData.put(CHILD_ID, keyGroup)
     mapData.put(CHILD_FULLNAME, nameGroup)
+    mapData.put(CHILD_PHOTO_URL, "empty")
     val mapMembers = hashMapOf<String, Any>()
 
     listContacts.forEach {
@@ -307,16 +309,64 @@ fun createGroupToDataBase(
 
     path.updateChildren(mapData)
         .addOnSuccessListener {
-            function()
             if (uri != Uri.EMPTY) {
                 putFileToStorage(uri, pathStorage) {
                     getUrlFromStorage(pathStorage) {
-                        path.child(CHILD_FILE_URL).setValue(it)
+                        path.child(CHILD_PHOTO_URL).setValue(it)
+                        addGroupToMainList(mapData, listContacts) {
+                            function()
+                        }
                     }
                 }
+            } else {
+                addGroupToMainList(mapData, listContacts) {
+                    function()
+                }
             }
+
         }
         .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+fun addGroupToMainList(
+    mapData: HashMap<String, Any>,
+    listContacts: MutableList<CommonModel>,
+    function: () -> Unit
+) {
+    val path = REF_DATABASE_ROOT.child(NODE_MAIN_LIST)
+    val map = hashMapOf<String, Any>()
+    map.put(CHILD_ID, mapData.getValue(CHILD_ID).toString())
+    map.put(CHILD_TYPE, TYPE_GROUP)
+
+    for (i in listContacts) {
+        path.child(i.id).child(map.getValue(CHILD_ID).toString())
+            .updateChildren(map)
+    }
+    path.child(CURRENT_UID).child(map.getValue(CHILD_ID).toString())
+        .updateChildren(map)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+fun sendMessageToGroup(message: String, groupId: String, typeText: String, function: () -> Unit) {
+    var refMessages = "$NODE_GROUPS/$groupId/$NODE_MESSAGES"
+
+    val messageKey = REF_DATABASE_ROOT.child(refMessages).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage.put(CHILD_FROM, CURRENT_UID)
+    mapMessage.put(CHILD_TYPE, typeText)
+    mapMessage.put(CHILD_TEXT, message)
+    mapMessage.put(CHILD_ID, messageKey.toString())
+    mapMessage.put(CHILD_TIMESTAMP, ServerValue.TIMESTAMP)
+
+    REF_DATABASE_ROOT
+        .child(refMessages)
+        .child(messageKey.toString())
+        .updateChildren(mapMessage)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+
 }
 
 

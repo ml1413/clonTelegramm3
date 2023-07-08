@@ -1,8 +1,5 @@
 package com.ooommm.clontelegramm3.ui.screens.groups
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ooommm.clontelegramm3.R
@@ -10,9 +7,6 @@ import com.ooommm.clontelegramm3.dataBase.*
 import com.ooommm.clontelegramm3.models.CommonModel
 import com.ooommm.clontelegramm3.ui.screens.base.BaseFragment
 import com.ooommm.clontelegramm3.utilits.*
-import java.util.Collections
-import java.util.stream.Collector
-import java.util.stream.Collectors
 
 class AddContactFragment : BaseFragment(R.layout.fradment_add_contacts) {
 
@@ -24,8 +18,8 @@ class AddContactFragment : BaseFragment(R.layout.fradment_add_contacts) {
 
     private lateinit var adapter: AddContactsAdapter
 
-    private val refMainList = REF_DATABASE_ROOT
-        .child(NODE_MAIN_LIST)
+    private val refContactsList = REF_DATABASE_ROOT
+        .child(NODE_PHONES_CONTACTS )
         .child(CURRENT_UID)
     private val refUsers = REF_DATABASE_ROOT
         .child(NODE_USERS)
@@ -57,10 +51,12 @@ class AddContactFragment : BaseFragment(R.layout.fradment_add_contacts) {
         adapter = AddContactsAdapter()
 
         //1 запрос
-        refMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
+        refContactsList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
             listItem = dataSnapshot.children.map { it.getCommonModel() }
-            //2 запрос
+
             listItem.forEach { model ->
+
+                //2 запрос
                 refUsers.child(model.id)
                     .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot1 ->
                         val newModel = dataSnapshot1.getCommonModel()
